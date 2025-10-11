@@ -26,15 +26,15 @@
   ],
   "screenshots": [
     {
-      "src": "screenshots/mobile-screenshot-1.png",
+      "src": "images/gallery/1.jpg",
       "sizes": "390x844",
-      "type": "image/png",
+      "type": "image/jpeg",
       "form_factor": "narrow"
     },
     {
-      "src": "screenshots/desktop-screenshot-1.png",
+      "src": "images/gallery/2.jpg",
       "sizes": "1280x720",
-      "type": "image/png",
+      "type": "image/jpeg",
       "form_factor": "wide"
     }
   ],
@@ -46,7 +46,7 @@
       "url": "/booking.html",
       "icons": [
         {
-          "src": "icons/shortcut-book.png",
+          "src": "images/logo.png",
           "sizes": "96x96"
         }
       ]
@@ -58,7 +58,7 @@
       "url": "/rooms.html",
       "icons": [
         {
-          "src": "icons/shortcut-rooms.png",
+          "src": "images/logo.png",
           "sizes": "96x96"
         }
       ]
@@ -70,7 +70,7 @@
       "url": "/gallery.html",
       "icons": [
         {
-          "src": "icons/shortcut-gallery.png",
+          "src": "images/logo.png",
           "sizes": "96x96"
         }
       ]
