@@ -77,9 +77,52 @@
         margin-bottom: 0.8rem;
     }
     
-    .tab-btn {
-        padding: 0.8rem;
-        font-size: 0.9rem;
+    /* Admin tab buttons - mobile specific */
+    .admin-tabs .tab-buttons .tab-btn {
+        padding: 1rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        transition: all 0.3s ease;
+        text-align: center;
+        width: 100%;
+        color: #6c757d;
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 0.5rem;
+        border-bottom: none;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .admin-tabs .tab-buttons .tab-btn:hover,
+    .admin-tabs .tab-buttons .tab-btn.active {
+        background: #3498db;
+        color: white !important;
+        border-color: #3498db;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+    
+    .admin-tabs .tab-buttons .tab-btn.active {
+        background: #3498db !important;
+        color: white !important;
+        border-color: #3498db !important;
+    }
+    
+    /* Ensure tab content is visible on mobile */
+    .admin-tabs .tab-content {
+        display: none;
+        width: 100%;
+    }
+    
+    .admin-tabs .tab-content.active {
+        display: block !important;
     }
     
     /* Header */
@@ -264,13 +307,6 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 0.5rem;
-    }
-    
-    .tab-btn {
-        flex: 1;
-        min-width: 120px;
-        padding: 0.6rem 0.8rem;
-        font-size: 0.9rem;
     }
     
     .bookings-table {

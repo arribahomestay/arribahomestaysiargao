@@ -41,3 +41,4 @@ function redirectWithLoading(url, delay = 2000) {
 window.showLoadingScreen = showLoadingScreen;
 window.hideLoadingScreen = hideLoadingScreen;
 window.redirectWithLoading = redirectWithLoading;
+

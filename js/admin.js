@@ -195,8 +195,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Setup event listeners
     function setupEventListeners() {
-        // Tab switching - improved for mobile
-        const tabButtons = document.querySelectorAll('.admin-tabs .tab-btn');
+        // Tab switching - fixed selector for mobile
+        const tabButtons = document.querySelectorAll('.tab-buttons .tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
 
         console.log('Setting up tab buttons:', tabButtons.length);
