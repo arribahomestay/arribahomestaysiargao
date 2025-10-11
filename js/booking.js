@@ -1,12 +1,83 @@
-// Booking Page JavaScript
+// Booking Page JavaScript - Mobile Device Compatible
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if Firebase is loaded
-    if (typeof window.db === 'undefined') {
-        console.error('Firebase not loaded');
-        return;
-    }
+    console.log('DOM loaded, waiting for Firebase...');
+    
+    // Wait for Firebase to be fully loaded on mobile devices
+    waitForFirebaseOnMobile().then(() => {
+        console.log('Firebase ready, initializing booking page...');
+        initializeBookingPage();
+    }).catch((error) => {
+        console.error('Firebase failed to load:', error);
+        showFirebaseError();
+    });
+});
 
+// Wait for Firebase to be fully loaded on mobile devices
+function waitForFirebaseOnMobile() {
+    return new Promise((resolve, reject) => {
+        let attempts = 0;
+        const maxAttempts = 50; // 5 seconds max wait
+        
+        const checkFirebase = () => {
+            attempts++;
+            console.log(`Firebase check attempt ${attempts}/${maxAttempts}`);
+            
+            // Check if Firebase is loaded
+            if (typeof window.db !== 'undefined' && 
+                typeof window.addDoc !== 'undefined' && 
+                typeof window.collection !== 'undefined' &&
+                window.firebaseInitialized !== false) {
+                
+                console.log('Firebase is ready!');
+                resolve();
+                return;
+            }
+            
+            if (attempts >= maxAttempts) {
+                console.error('Firebase failed to load after maximum attempts');
+                reject(new Error('Firebase initialization timeout'));
+                return;
+            }
+            
+            // Wait 100ms before next check
+            setTimeout(checkFirebase, 100);
+        };
+        
+        checkFirebase();
+    });
+}
+
+// Show Firebase error message
+function showFirebaseError() {
+    const form = document.getElementById('bookingForm');
+    if (form) {
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = `
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+        `;
+        errorDiv.innerHTML = `
+            <strong>Service Unavailable</strong><br>
+            The booking service is temporarily unavailable. Please refresh the page and try again.
+            <br><br>
+            <button onclick="window.location.reload()" style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
+                Refresh Page
+            </button>
+        `;
+        form.parentNode.insertBefore(errorDiv, form);
+    }
+}
+
+// Initialize booking page after Firebase is ready
+function initializeBookingPage() {
+    console.log('Initializing booking page...');
+    
+    // Get Firebase functions
     const db = window.db;
     const addDoc = window.addDoc;
     const getDocs = window.getDocs;
@@ -19,70 +90,36 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentBooking = null;
     let availabilityData = {}; // Store availability data from Firebase
 
-    // Initialize booking page
-    initializeBookingPage();
-
-    // Initialize booking page - iOS Safari Compatible
-    function initializeBookingPage() {
-        console.log('Initializing booking page...');
-        
-        // Check if device is mobile and iOS Safari
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const isIOSSafari = /iPad|iPhone|iPod/.test(navigator.userAgent) && /Safari/.test(navigator.userAgent);
-        console.log('Device type:', isMobile ? 'Mobile' : 'Desktop');
-        console.log('iOS Safari:', isIOSSafari);
-        
-        // Wait for Firebase initialization on iOS Safari
-        if (isIOSSafari) {
-            waitForFirebaseInitialization().then(() => {
-                setupEventListeners();
-                loadAvailabilityData().then(() => {
-                    setupDateValidation();
-                });
-                setupFormValidation();
-                setupIOSOptimizations();
-                
-                // Initial summary update with delay for iOS Safari
-                setTimeout(() => {
-                    updateBookingSummary();
-                }, 1000);
-            });
-        } else {
-            setupEventListeners();
-            loadAvailabilityData().then(() => {
-                setupDateValidation();
-            });
-            setupFormValidation();
-            
-            // Mobile-specific initialization
-            if (isMobile) {
-                setupMobileOptimizations();
-            }
-            
-            // Initial summary update
-            setTimeout(() => {
-                updateBookingSummary();
-            }, 500);
-        }
-        
-        console.log('Booking page initialization complete');
+    // Check if device is mobile and iOS Safari
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isIOSSafari = /iPad|iPhone|iPod/.test(navigator.userAgent) && /Safari/.test(navigator.userAgent);
+    console.log('Device type:', isMobile ? 'Mobile' : 'Desktop');
+    console.log('iOS Safari:', isIOSSafari);
+    
+    // Setup event listeners and validation
+    setupEventListeners();
+    loadAvailabilityData().then(() => {
+        setupDateValidation();
+    });
+    setupFormValidation();
+    
+    // Mobile-specific optimizations
+    if (isMobile) {
+        setupMobileOptimizations();
     }
-
-    // Wait for Firebase initialization on iOS Safari
-    function waitForFirebaseInitialization() {
-        return new Promise((resolve) => {
-            const checkFirebase = () => {
-                if (window.firebaseInitialized && window.db) {
-                    console.log('Firebase ready for iOS Safari');
-                    resolve();
-                } else {
-                    console.log('Waiting for Firebase initialization...');
-                    setTimeout(checkFirebase, 100);
-                }
-            };
-            checkFirebase();
-        });
+    
+    // iOS Safari specific optimizations
+    if (isIOSSafari) {
+        setupIOSOptimizations();
     }
+    
+    // Initial summary update with delay for mobile devices
+    setTimeout(() => {
+        updateBookingSummary();
+    }, isMobile ? 1000 : 500);
+    
+    console.log('Booking page initialization complete');
+
 
     // iOS Safari specific optimizations
     function setupIOSOptimizations() {
@@ -164,48 +201,60 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Mobile optimizations complete');
     }
 
-    // Setup event listeners - iOS Safari Compatible
+    // Setup event listeners - Mobile Device Compatible
     function setupEventListeners() {
+        console.log('Setting up event listeners...');
+        
         // Form submission
-        document.getElementById('bookingForm').addEventListener('submit', handleBookingSubmit);
+        const form = document.getElementById('bookingForm');
+        if (form) {
+            form.addEventListener('submit', handleBookingSubmit);
+            console.log('Form submission listener added');
+        } else {
+            console.error('Booking form not found!');
+        }
 
-        // Form field changes for summary update - Enhanced for iOS Safari
+        // Form field changes for summary update - Enhanced for mobile devices
         const formFields = ['checkInDate', 'checkOutDate', 'guests', 'extraBed'];
         formFields.forEach(fieldId => {
             const field = document.getElementById(fieldId);
             if (field) {
-                // iOS Safari specific event handling
-                if (window.isIOSSafari) {
-                    // iOS Safari requires specific event handling
+                console.log(`Setting up listeners for ${fieldId}`);
+                
+                // Mobile device specific event handling
+                if (isMobile) {
+                    // Mobile devices require specific event handling with delays
                     field.addEventListener('change', function() {
-                        setTimeout(updateBookingSummary, 100);
+                        console.log(`${fieldId} changed`);
+                        setTimeout(updateBookingSummary, 200);
                     });
                     field.addEventListener('input', function() {
-                        setTimeout(updateBookingSummary, 100);
+                        console.log(`${fieldId} input`);
+                        setTimeout(updateBookingSummary, 200);
                     });
                     field.addEventListener('blur', function() {
-                        setTimeout(updateBookingSummary, 100);
+                        console.log(`${fieldId} blur`);
+                        setTimeout(updateBookingSummary, 200);
                     });
-                    // iOS Safari touch events
+                    // Mobile touch events
                     field.addEventListener('touchend', function() {
-                        setTimeout(updateBookingSummary, 100);
+                        console.log(`${fieldId} touchend`);
+                        setTimeout(updateBookingSummary, 200);
                     });
                 } else {
-                    // Standard event listeners for other browsers
+                    // Standard event listeners for desktop
                     field.addEventListener('change', updateBookingSummary);
                     field.addEventListener('input', updateBookingSummary);
                     field.addEventListener('blur', updateBookingSummary);
-                    
-                    // For mobile devices, also listen to touch events
-                    if ('ontouchstart' in window) {
-                        field.addEventListener('touchend', updateBookingSummary);
-                    }
                 }
+            } else {
+                console.error(`Field ${fieldId} not found!`);
             }
         });
 
         // Modal controls
         setupModalControls();
+        console.log('Event listeners setup complete');
     }
 
     // Setup modal controls
@@ -762,11 +811,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const guestsInput = document.getElementById('guests');
             const extraBedInput = document.getElementById('extraBed');
             
+            if (!checkInInput || !checkOutInput || !guestsInput || !extraBedInput) {
+                console.error('Required form elements not found');
+                return;
+            }
+            
             // Get values with fallbacks for mobile compatibility
             const checkInDate = checkInInput?.dataset?.value || checkInInput?.value || '';
             const checkOutDate = checkOutInput?.dataset?.value || checkOutInput?.value || '';
             const guests = parseInt(guestsInput?.value) || 0;
-            const extraBed = parseInt(extraBedInput?.value) || 0;
+            const extraBed = extraBedInput?.checked ? 1 : 0;
 
             console.log('Summary values:', { checkInDate, checkOutDate, guests, extraBed });
 
@@ -853,33 +907,45 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         console.log('Booking form submission started...');
-
-        // Validate all fields
-        const form = e.target;
-        const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
-        let isValid = true;
-
-        inputs.forEach(input => {
-            if (!validateField({ target: input })) {
-                isValid = false;
-            }
-        });
-
-        if (!isValid) {
-            alert('Please fill in all required fields correctly.');
-            return;
+        
+        // Show loading state
+        const submitBtn = document.getElementById('submitBooking');
+        const originalText = submitBtn?.textContent;
+        if (submitBtn) {
+            submitBtn.textContent = 'Processing...';
+            submitBtn.disabled = true;
         }
 
-        // Get form data with mobile compatibility
-        const formData = new FormData(form);
-        
-        // Validate availability for selected dates - Enhanced for mobile
-        const checkInInput = document.getElementById('checkInDate');
-        const checkOutInput = document.getElementById('checkOutDate');
-        
-        // Get dates with multiple fallbacks for mobile compatibility
-        let checkInDate = checkInInput?.dataset?.value || checkInInput?.value || formData.get('checkInDate');
-        let checkOutDate = checkOutInput?.dataset?.value || checkOutInput?.value || formData.get('checkOutDate');
+        try {
+            // Validate all fields
+            const form = e.target;
+            const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!validateField({ target: input })) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                throw new Error('Please fill in all required fields correctly.');
+            }
+
+            // Get form data with mobile compatibility
+            const formData = new FormData(form);
+            
+            // Validate availability for selected dates - Enhanced for mobile
+            const checkInInput = document.getElementById('checkInDate');
+            const checkOutInput = document.getElementById('checkOutDate');
+            
+            if (!checkInInput || !checkOutInput) {
+                throw new Error('Date inputs not found');
+            }
+            
+            // Get dates with multiple fallbacks for mobile compatibility
+            let checkInDate = checkInInput?.dataset?.value || checkInInput?.value || formData.get('checkInDate');
+            let checkOutDate = checkOutInput?.dataset?.value || checkOutInput?.value || formData.get('checkOutDate');
         
         console.log('Date values:', { 
             checkInDate, 
@@ -1065,7 +1131,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Error saving booking:', error);
             
-            // More detailed error handling for mobile
+            // More detailed error handling for mobile devices
             let errorMessage = 'Error submitting booking. Please try again.';
             
             if (error.code === 'permission-denied') {
@@ -1076,17 +1142,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 errorMessage = 'Invalid data provided. Please check your input.';
             } else if (error.message.includes('Firebase not initialized')) {
                 errorMessage = 'Service not available. Please refresh the page and try again.';
+            } else if (error.message.includes('Date inputs not found')) {
+                errorMessage = 'Form error. Please refresh the page and try again.';
+            } else if (error.message.includes('Required form elements not found')) {
+                errorMessage = 'Form error. Please refresh the page and try again.';
             }
             
             // Show error with mobile-friendly alert
             alert(errorMessage);
             
         } finally {
-            // Reset button state
+            // Reset button state with mobile compatibility
+            const submitBtn = document.getElementById('submitBooking');
             if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.style.opacity = '1';
+                submitBtn.textContent = originalText || 'Submit Booking';
             }
+            
+            // Reset other button elements if they exist
+            const submitText = document.getElementById('submitText');
+            const submitLoading = document.getElementById('submitLoading');
             if (submitText) submitText.style.display = 'inline';
             if (submitLoading) submitLoading.style.display = 'none';
         }

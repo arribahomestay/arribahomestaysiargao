@@ -362,7 +362,7 @@
             window.getToken = getToken;
             window.onMessage = onMessage;
             
-            // iOS Safari specific flag
+            // Set Firebase ready flag for mobile devices
             window.firebaseInitialized = true;
             window.isIOSSafari = isIOSSafari;
             
@@ -370,7 +370,7 @@
             
         } catch (error) {
             console.error('Firebase initialization failed:', error);
-            // Fallback for iOS Safari
+            // Set failed flag for mobile devices
             window.firebaseInitialized = false;
             window.isIOSSafari = isIOSSafari;
         }
