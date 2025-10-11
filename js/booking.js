@@ -209,10 +209,16 @@ function setupMobileOptimizations() {
         // Form submission
     const form = document.getElementById('bookingForm');
     if (form) {
-        form.addEventListener('submit', handleBookingSubmit);
-        console.log('✅ Form submission listener added to:', form);
-        console.log('✅ Form action:', form.action);
-        console.log('✅ Form method:', form.method);
+        console.log('🔍 Found booking form:', form);
+        console.log('🔍 Form action:', form.action);
+        console.log('🔍 Form method:', form.method);
+        
+        form.addEventListener('submit', function(e) {
+            console.log('🚀 FORM SUBMIT EVENT TRIGGERED!');
+            handleBookingSubmit(e);
+        });
+        
+        console.log('✅ Form submission listener added successfully');
     } else {
         console.error('❌ Booking form not found!');
     }
@@ -470,8 +476,8 @@ function validateField(event) {
         const summaryExtraBedFee = document.getElementById('summaryExtraBedFee');
         const summaryTotalFee = document.getElementById('summaryTotalFee');
 
-        if (summaryGuests) summaryGuests.textContent = guests || '-';
-        if (summaryExtraBeds) summaryExtraBeds.textContent = extraBed || '0';
+        if (summaryGuests) summaryGuests.textContent = guests > 0 ? guests : '-';
+        if (summaryExtraBeds) summaryExtraBeds.textContent = extraBed > 0 ? extraBed : '0';
 
         // Calculate duration and fees
         if (checkInDate && checkOutDate) {
