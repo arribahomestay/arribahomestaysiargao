@@ -373,26 +373,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         console.log('Admin URL:', adminUrl);
                         
-                        // Try multiple redirect methods for better compatibility
-                        try {
-                            // Method 1: Direct href
+                        // Use smooth loading screen redirect
+                        if (window.redirectWithLoading) {
+                            window.redirectWithLoading(adminUrl, 2000);
+                        } else {
+                            // Fallback to direct redirect if loading screen not available
                             window.location.href = adminUrl;
-                        } catch (e) {
-                            console.log('Primary redirect failed, trying alternative...');
-                            try {
-                                // Method 2: location.assign
-                                window.location.assign(adminUrl);
-                            } catch (e2) {
-                                console.log('Secondary redirect failed, trying replace...');
-                                try {
-                                    // Method 3: location.replace
-                                    window.location.replace(adminUrl);
-                                } catch (e3) {
-                                    console.log('All redirect methods failed, trying fallback...');
-                                    // Method 4: Fallback to relative path
-                                    window.location.href = './admin.html';
-                                }
-                            }
                         }
                     }, 1800);
                 } else {
