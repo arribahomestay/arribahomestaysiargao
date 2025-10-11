@@ -1,4 +1,5 @@
 // Booking Page JavaScript - Mobile Device Compatible
+console.log('🚀 BOOKING.JS LOADED - Version 1.0.1');
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, waiting for Firebase...');
@@ -408,9 +409,9 @@ function validateField(event) {
         
         if (selectedDate < today) {
             showFieldError(field, 'Please select a future date');
-            return false;
+                return false;
+            }
         }
-    }
 
         // Number validation
         if (field.type === 'number' && value) {
