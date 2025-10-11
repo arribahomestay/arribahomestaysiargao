@@ -75,138 +75,23 @@
     border-radius: 15px;
 }
 
-/* Hide all carousel elements */
+/* All carousel elements are completely removed - only single image container remains */
+
+/* Force hide any remaining carousel elements */
 .image-carousel,
 .carousel-container,
 .carousel-track,
 .carousel-slide,
 .mirror-preview,
 .carousel-btn,
-.carousel-indicators {
-    display: none !important;
-}
-
-.carousel-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.carousel-track {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.carousel-slide {
-    min-width: 100%;
-    height: 100%;
-    position: relative;
-    flex-shrink: 0;
-}
-
-.carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 15px;
-}
-
-/* Mirror Effect */
-.mirror-preview {
-    position: absolute;
-    top: 0;
-    right: -20px;
-    width: 60px;
-    height: 100%;
-    overflow: hidden;
-    border-radius: 0 15px 15px 0;
-    transform: scaleX(-1);
-    opacity: 0.3;
-    z-index: 1;
-}
-
-.mirror-image {
-    width: 100%;
-    height: 100%;
-}
-
-.mirror-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    filter: blur(1px);
-}
-
-/* Navigation Buttons */
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 3;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    color: #2c3e50;
-}
-
-.carousel-btn:hover {
-    background: rgba(255, 255, 255, 1);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-.prev-btn {
-    left: 15px;
-}
-
-.next-btn {
-    right: 15px;
-}
-
-/* Slide Indicators */
-.carousel-indicators {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-    z-index: 3;
-}
-
+.carousel-indicators,
+.prev-btn,
+.next-btn,
 .indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-}
-
-.indicator.active {
-    background: rgba(255, 255, 255, 0.9);
-    transform: scale(1.2);
-}
-
-.indicator:hover {
-    background: rgba(255, 255, 255, 0.8);
-    transform: scale(1.1);
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 /* Social Media Section */
