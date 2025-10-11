@@ -1,5 +1,5 @@
 // Booking Page JavaScript - Mobile Device Compatible
-console.log('🚀 BOOKING.JS LOADED - Version 1.0.1');
+console.log('🚀 BOOKING.JS LOADED - Version 1.0.2');
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, waiting for Firebase...');
