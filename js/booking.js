@@ -119,195 +119,196 @@ function initializeBookingPage() {
     }, isMobile ? 1000 : 500);
     
     console.log('Booking page initialization complete');
+}
 
-
-    // iOS Safari specific optimizations
-    function setupIOSOptimizations() {
-        console.log('Setting up iOS Safari optimizations...');
-        
-        // Add iOS Safari specific CSS classes
-        document.body.classList.add('ios-safari');
-        
-        // Fix iOS Safari modal z-index issues
-        const modals = document.querySelectorAll('.modal');
-        modals.forEach(modal => {
-            modal.style.zIndex = '999999';
-            modal.style.position = 'fixed';
-            modal.style.webkitTransform = 'translateZ(0)';
-            modal.style.transform = 'translateZ(0)';
-        });
-        
-        // iOS Safari specific touch handling
-        const form = document.getElementById('bookingForm');
-        if (form) {
-            form.addEventListener('touchstart', function(e) {
-                // Prevent iOS Safari zoom on form inputs
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
-                    e.target.style.fontSize = '16px';
-                }
-            }, { passive: true });
-        }
-        
-        console.log('iOS Safari optimizations complete');
+// iOS Safari specific optimizations
+function setupIOSOptimizations() {
+    console.log('Setting up iOS Safari optimizations...');
+    
+    // Add iOS Safari specific CSS classes
+    document.body.classList.add('ios-safari');
+    
+    // Fix iOS Safari modal z-index issues
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        modal.style.zIndex = '999999';
+        modal.style.position = 'fixed';
+        modal.style.webkitTransform = 'translateZ(0)';
+        modal.style.transform = 'translateZ(0)';
+    });
+    
+    // iOS Safari specific touch handling
+    const form = document.getElementById('bookingForm');
+    if (form) {
+        form.addEventListener('touchstart', function(e) {
+            // Prevent iOS Safari zoom on form inputs
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
+                e.target.style.fontSize = '16px';
+            }
+        }, { passive: true });
     }
+    
+    console.log('iOS Safari optimizations complete');
+}
 
-    // Setup mobile-specific optimizations
-    function setupMobileOptimizations() {
-        console.log('Setting up mobile optimizations...');
-        
-        // Add mobile-specific meta tags if not present
-        const viewport = document.querySelector('meta[name="viewport"]');
-        if (viewport) {
-            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-        }
-        
-        // Add mobile-specific CSS classes
-        document.body.classList.add('mobile-device');
-        
-        // Optimize form inputs for mobile
-        const inputs = document.querySelectorAll('input, select, textarea');
-        inputs.forEach(input => {
-            input.classList.add('mobile-optimized');
-            
-            // Add mobile-specific event listeners
-            input.addEventListener('focus', function() {
-                // Prevent zoom on iOS
-                if (this.type === 'date' || this.type === 'number') {
-                    this.style.fontSize = '16px';
-                }
-            });
-        });
-        
-        // Add mobile-specific touch handlers
-        const form = document.getElementById('bookingForm');
-        if (form) {
-            form.addEventListener('touchstart', function(e) {
-                // Add touch feedback
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
-                    e.target.style.backgroundColor = '#f8f9fa';
-                }
-            });
-            
-            form.addEventListener('touchend', function(e) {
-                // Remove touch feedback
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
-                    setTimeout(() => {
-                        e.target.style.backgroundColor = '';
-                    }, 150);
-                }
-            });
-        }
-        
-        console.log('Mobile optimizations complete');
+// Setup mobile-specific optimizations
+function setupMobileOptimizations() {
+    console.log('Setting up mobile optimizations...');
+    
+    // Add mobile-specific meta tags if not present
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport) {
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
     }
-
-    // Setup event listeners - Mobile Device Compatible
-    function setupEventListeners() {
-        console.log('Setting up event listeners...');
+    
+    // Add mobile-specific CSS classes
+    document.body.classList.add('mobile-device');
+    
+    // Optimize form inputs for mobile
+    const inputs = document.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        input.classList.add('mobile-optimized');
         
-        // Form submission
-        const form = document.getElementById('bookingForm');
-        if (form) {
-            form.addEventListener('submit', handleBookingSubmit);
-            console.log('Form submission listener added');
-        } else {
-            console.error('Booking form not found!');
-        }
-
-        // Form field changes for summary update - Enhanced for mobile devices
-        const formFields = ['checkInDate', 'checkOutDate', 'guests', 'extraBed'];
-        formFields.forEach(fieldId => {
-            const field = document.getElementById(fieldId);
-            if (field) {
-                console.log(`Setting up listeners for ${fieldId}`);
-                
-                // Mobile device specific event handling
-                if (isMobile) {
-                    // Mobile devices require specific event handling with delays
-                    field.addEventListener('change', function() {
-                        console.log(`${fieldId} changed`);
-                        setTimeout(updateBookingSummary, 200);
-                    });
-                    field.addEventListener('input', function() {
-                        console.log(`${fieldId} input`);
-                        setTimeout(updateBookingSummary, 200);
-                    });
-                    field.addEventListener('blur', function() {
-                        console.log(`${fieldId} blur`);
-                        setTimeout(updateBookingSummary, 200);
-                    });
-                    // Mobile touch events
-                    field.addEventListener('touchend', function() {
-                        console.log(`${fieldId} touchend`);
-                        setTimeout(updateBookingSummary, 200);
-                    });
-                } else {
-                    // Standard event listeners for desktop
-                    field.addEventListener('change', updateBookingSummary);
-                    field.addEventListener('input', updateBookingSummary);
-                    field.addEventListener('blur', updateBookingSummary);
-                }
-            } else {
-                console.error(`Field ${fieldId} not found!`);
+        // Add mobile-specific event listeners
+        input.addEventListener('focus', function() {
+            // Prevent zoom on iOS
+            if (this.type === 'date' || this.type === 'number') {
+                this.style.fontSize = '16px';
             }
         });
+    });
+    
+    // Add mobile-specific touch handlers
+    const form = document.getElementById('bookingForm');
+    if (form) {
+        form.addEventListener('touchstart', function(e) {
+            // Add touch feedback
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
+                e.target.style.backgroundColor = '#f8f9fa';
+            }
+        });
+        
+        form.addEventListener('touchend', function(e) {
+            // Remove touch feedback
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
+                setTimeout(() => {
+                    e.target.style.backgroundColor = '';
+                }, 150);
+            }
+        });
+    }
+    
+    console.log('Mobile optimizations complete');
+}
 
-        // Modal controls
-        setupModalControls();
-        console.log('Event listeners setup complete');
+// Setup event listeners - Mobile Device Compatible
+function setupEventListeners() {
+    console.log('Setting up event listeners...');
+    
+    // Form submission
+    const form = document.getElementById('bookingForm');
+    if (form) {
+        form.addEventListener('submit', handleBookingSubmit);
+        console.log('Form submission listener added');
+    } else {
+        console.error('Booking form not found!');
     }
 
-    // Setup modal controls
-    function setupModalControls() {
-        const modal = document.getElementById('successModal');
-        const closeBtn = document.querySelector('.close');
+    // Form field changes for summary update - Enhanced for mobile devices
+    const formFields = ['checkInDate', 'checkOutDate', 'guests', 'extraBed'];
+    formFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            console.log(`Setting up listeners for ${fieldId}`);
+            
+            // Mobile device specific event handling
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (isMobile) {
+                // Mobile devices require specific event handling with delays
+                field.addEventListener('change', function() {
+                    console.log(`${fieldId} changed`);
+                    setTimeout(updateBookingSummary, 200);
+                });
+                field.addEventListener('input', function() {
+                    console.log(`${fieldId} input`);
+                    setTimeout(updateBookingSummary, 200);
+                });
+                field.addEventListener('blur', function() {
+                    console.log(`${fieldId} blur`);
+                    setTimeout(updateBookingSummary, 200);
+                });
+                // Mobile touch events
+                field.addEventListener('touchend', function() {
+                    console.log(`${fieldId} touchend`);
+                    setTimeout(updateBookingSummary, 200);
+                });
+            } else {
+                // Standard event listeners for desktop
+                field.addEventListener('change', updateBookingSummary);
+                field.addEventListener('input', updateBookingSummary);
+                field.addEventListener('blur', updateBookingSummary);
+            }
+        } else {
+            console.error(`Field ${fieldId} not found!`);
+        }
+    });
 
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
+    // Modal controls
+    setupModalControls();
+    console.log('Event listeners setup complete');
+}
+
+// Setup modal controls
+function setupModalControls() {
+    const modal = document.getElementById('successModal');
+    const closeBtn = document.querySelector('.close');
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+    }
+
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
                 modal.style.display = 'none';
                 document.body.style.overflow = 'auto';
-            });
-        }
-
-        if (modal) {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        }
+            }
+        });
     }
+}
 
-    // Load availability data from Firebase
-    async function loadAvailabilityData() {
-        try {
-            console.log('Loading availability data for booking form...');
-            const availabilityRef = collection(db, 'availability');
-            const snapshot = await getDocs(availabilityRef);
-            
-            availabilityData = {};
-            snapshot.forEach(doc => {
-                availabilityData[doc.id] = doc.data().status;
-                console.log(`Loaded: ${doc.id} = ${doc.data().status}`);
-            });
-            
-            console.log('Availability data loaded for booking form:', availabilityData);
-            console.log('Total documents loaded:', snapshot.size);
-        } catch (error) {
-            console.error('Error loading availability data:', error);
-        }
+// Load availability data from Firebase
+async function loadAvailabilityData() {
+    try {
+        console.log('Loading availability data for booking form...');
+        const availabilityRef = collection(db, 'availability');
+        const snapshot = await getDocs(availabilityRef);
+        
+        availabilityData = {};
+        snapshot.forEach(doc => {
+            availabilityData[doc.id] = doc.data().status;
+            console.log(`Loaded: ${doc.id} = ${doc.data().status}`);
+        });
+        
+        console.log('Availability data loaded for booking form:', availabilityData);
+        console.log('Total documents loaded:', snapshot.size);
+    } catch (error) {
+        console.error('Error loading availability data:', error);
     }
+}
 
-    // Check if a date is available
-    function isDateAvailable(dateString) {
-        // If no availability data exists for this date, default to available
-        if (!availabilityData[dateString]) {
-            return true;
-        }
-        // Check if the status is 'available' (not 'unavailable')
-        return availabilityData[dateString] === 'available';
+// Check if a date is available
+function isDateAvailable(dateString) {
+    // If no availability data exists for this date, default to available
+    if (!availabilityData[dateString]) {
+        return true;
     }
+    // Check if the status is 'available' (not 'unavailable')
+    return availabilityData[dateString] === 'available';
+}
 
     // Add visual indicators to date inputs
     function addDateInputStyling() {
@@ -820,7 +821,7 @@ function initializeBookingPage() {
             const checkInDate = checkInInput?.dataset?.value || checkInInput?.value || '';
             const checkOutDate = checkOutInput?.dataset?.value || checkOutInput?.value || '';
             const guests = parseInt(guestsInput?.value) || 0;
-            const extraBed = extraBedInput?.checked ? 1 : 0;
+            const extraBed = parseInt(extraBedInput?.value) || 0;
 
             console.log('Summary values:', { checkInDate, checkOutDate, guests, extraBed });
 
@@ -909,7 +910,7 @@ function initializeBookingPage() {
         console.log('Booking form submission started...');
         
         // Show loading state
-        const submitBtn = document.getElementById('submitBooking');
+        const submitBtn = document.getElementById('submitBtn');
         const originalText = submitBtn?.textContent;
         if (submitBtn) {
             submitBtn.textContent = 'Processing...';
@@ -946,13 +947,14 @@ function initializeBookingPage() {
             // Get dates with multiple fallbacks for mobile compatibility
             let checkInDate = checkInInput?.dataset?.value || checkInInput?.value || formData.get('checkInDate');
             let checkOutDate = checkOutInput?.dataset?.value || checkOutInput?.value || formData.get('checkOutDate');
-        
-        console.log('Date values:', { 
-            checkInDate, 
-            checkOutDate, 
-            datasetValue: checkInInput?.dataset?.value,
-            inputValue: checkInInput?.value 
-        });
+            
+            console.log('Date values:', { 
+                checkInDate, 
+                checkOutDate, 
+                datasetValue: checkInInput?.dataset?.value,
+                inputValue: checkInInput?.value,
+                formDataValue: formData.get('checkInDate')
+            });
         
         // Validate dates exist
         if (!checkInDate || !checkOutDate) {
@@ -1153,7 +1155,7 @@ function initializeBookingPage() {
             
         } finally {
             // Reset button state with mobile compatibility
-            const submitBtn = document.getElementById('submitBooking');
+            const submitBtn = document.getElementById('submitBtn');
             if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.style.opacity = '1';
