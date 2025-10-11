@@ -3,6 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3498db">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Arriba Homestay">
+    <meta name="msapplication-TileColor" content="#3498db">
+    <meta name="msapplication-TileImage" content="icons/icon-144x144.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167x167.png">
+    
+    <!-- Standard Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16x16.png">
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-square70x70logo" content="icons/icon-72x72.png">
+    <meta name="msapplication-square150x150logo" content="icons/icon-144x144.png">
+    <meta name="msapplication-wide310x150logo" content="icons/icon-310x150.png">
+    <meta name="msapplication-square310x310logo" content="icons/icon-310x310.png">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -161,6 +186,22 @@
     <script src="js/firebase-auth.js"></script>
     <script src="js/notifications.js"></script>
     <script src="js/loading-screen.js"></script>
+    <script src="js/pwa-installer.js"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
     
     <!-- Loading Screen -->
     <div id="loadingScreen" class="loading-screen">
