@@ -735,7 +735,7 @@ function resetSummaryDisplay() {
             console.log('Booking submission completed successfully');
         }
             
-        } catch (error) {
+    } catch (error) {
             console.error('Error saving booking:', error);
             
         // More detailed error handling for mobile devices
