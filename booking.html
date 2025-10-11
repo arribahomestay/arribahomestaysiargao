@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Now - ARRIBA HOMESTAY</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/booking.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="images/logo.png" alt="ARRIBA HOMESTAY Logo" class="logo-img">
+                <h2>ARRIBA HOMESTAY</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a href="rooms.html" class="nav-link">ROOMS</a>
+                </li>
+                <li class="nav-item">
+                    <a href="gallery.html" class="nav-link">GALLERY</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">ABOUT US</a>
+                </li>
+                <li class="nav-item">
+                    <button class="account-btn" id="accountBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="booking-hero">
+            <div class="container">
+                <h1>Book Your Stay</h1>
+                <p>Experience paradise at ARRIBA HOMESTAY</p>
+            </div>
+        </section>
+
+        <section class="booking-content">
+            <div class="container">
+                <div class="booking-form-container">
+                    <div class="booking-form-header">
+                        <h2>Reservation Form</h2>
+                        <p>Please fill out the form below to make your reservation</p>
+                    </div>
+
+                    <form id="bookingForm" class="booking-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName">FULL NAME *</label>
+                                <input type="text" id="fullName" name="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">EMAIL *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="countryCode">COUNTRY *</label>
+                                <select id="countryCode" name="countryCode" required>
+                                    <option value="">Select Country</option>
+                                    <option value="+63">🇵🇭 Philippines (+63)</option>
+                                    <option value="+1">🇺🇸 United States (+1)</option>
+                                    <option value="+44">🇬🇧 United Kingdom (+44)</option>
+                                    <option value="+61">🇦🇺 Australia (+61)</option>
+                                    <option value="+65">🇸🇬 Singapore (+65)</option>
+                                    <option value="+60">🇲🇾 Malaysia (+60)</option>
+                                    <option value="+66">🇹🇭 Thailand (+66)</option>
+                                    <option value="+84">🇻🇳 Vietnam (+84)</option>
+                                    <option value="+62">🇮🇩 Indonesia (+62)</option>
+                                    <option value="+81">🇯🇵 Japan (+81)</option>
+                                    <option value="+82">🇰🇷 South Korea (+82)</option>
+                                    <option value="+86">🇨🇳 China (+86)</option>
+                                    <option value="+91">🇮🇳 India (+91)</option>
+                                    <option value="+49">🇩🇪 Germany (+49)</option>
+                                    <option value="+33">🇫🇷 France (+33)</option>
+                                    <option value="+39">🇮🇹 Italy (+39)</option>
+                                    <option value="+34">🇪🇸 Spain (+34)</option>
+                                    <option value="+31">🇳🇱 Netherlands (+31)</option>
+                                    <option value="+41">🇨🇭 Switzerland (+41)</option>
+                                    <option value="+46">🇸🇪 Sweden (+46)</option>
+                                    <option value="+47">🇳🇴 Norway (+47)</option>
+                                    <option value="+45">🇩🇰 Denmark (+45)</option>
+                                    <option value="+358">🇫🇮 Finland (+358)</option>
+                                    <option value="+7">🇷🇺 Russia (+7)</option>
+                                    <option value="+55">🇧🇷 Brazil (+55)</option>
+                                    <option value="+52">🇲🇽 Mexico (+52)</option>
+                                    <option value="+54">🇦🇷 Argentina (+54)</option>
+                                    <option value="+56">🇨🇱 Chile (+56)</option>
+                                    <option value="+57">🇨🇴 Colombia (+57)</option>
+                                    <option value="+51">🇵🇪 Peru (+51)</option>
+                                    <option value="+58">🇻🇪 Venezuela (+58)</option>
+                                    <option value="+27">🇿🇦 South Africa (+27)</option>
+                                    <option value="+20">🇪🇬 Egypt (+20)</option>
+                                    <option value="+90">🇹🇷 Turkey (+90)</option>
+                                    <option value="+966">🇸🇦 Saudi Arabia (+966)</option>
+                                    <option value="+971">🇦🇪 UAE (+971)</option>
+                                    <option value="+974">🇶🇦 Qatar (+974)</option>
+                                    <option value="+965">🇰🇼 Kuwait (+965)</option>
+                                    <option value="+973">🇧🇭 Bahrain (+973)</option>
+                                    <option value="+968">🇴🇲 Oman (+968)</option>
+                                    <option value="+961">🇱🇧 Lebanon (+961)</option>
+                                    <option value="+962">🇯🇴 Jordan (+962)</option>
+                                    <option value="+972">🇮🇱 Israel (+972)</option>
+                                    <option value="+98">🇮🇷 Iran (+98)</option>
+                                    <option value="+92">🇵🇰 Pakistan (+92)</option>
+                                    <option value="+880">🇧🇩 Bangladesh (+880)</option>
+                                    <option value="+94">🇱🇰 Sri Lanka (+94)</option>
+                                    <option value="+977">🇳🇵 Nepal (+977)</option>
+                                    <option value="+975">🇧🇹 Bhutan (+975)</option>
+                                    <option value="+93">🇦🇫 Afghanistan (+93)</option>
+                                    <option value="+998">🇺🇿 Uzbekistan (+998)</option>
+                                    <option value="+996">🇰🇬 Kyrgyzstan (+996)</option>
+                                    <option value="+992">🇹🇯 Tajikistan (+992)</option>
+                                    <option value="+993">🇹🇲 Turkmenistan (+993)</option>
+                                    <option value="+7">🇰🇿 Kazakhstan (+7)</option>
+                                    <option value="+976">🇲🇳 Mongolia (+976)</option>
+                                    <option value="+850">🇰🇵 North Korea (+850)</option>
+                                    <option value="+855">🇰🇭 Cambodia (+855)</option>
+                                    <option value="+856">🇱🇦 Laos (+856)</option>
+                                    <option value="+95">🇲🇲 Myanmar (+95)</option>
+                                    <option value="+880">🇧🇩 Bangladesh (+880)</option>
+                                    <option value="+960">🇲🇻 Maldives (+960)</option>
+                                    <option value="+960">🇲🇻 Maldives (+960)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber">PHONE NUMBER *</label>
+                                <input type="tel" id="phoneNumber" name="phoneNumber" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="checkInDate">CHECK IN DATE *</label>
+                                <input type="date" id="checkInDate" name="checkInDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkOutDate">CHECK OUT DATE *</label>
+                                <input type="date" id="checkOutDate" name="checkOutDate" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="guests">HOW MANY GUESTS *</label>
+                                <input type="number" id="guests" name="guests" min="1" max="20" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="extraBed">EXTRA BED</label>
+                                <input type="number" id="extraBed" name="extraBed" min="0" max="10" value="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="specialRequests">SPECIAL REQUESTS</label>
+                            <textarea id="specialRequests" name="specialRequests" rows="3" placeholder="Any special requests or additional information..."></textarea>
+                        </div>
+
+
+                        <div class="booking-summary">
+                            <h3>Booking Summary</h3>
+                            <div class="summary-item">
+                                <span>Duration:</span>
+                                <span id="summaryDuration">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Guests:</span>
+                                <span id="summaryGuests">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Extra Beds:</span>
+                                <span id="summaryExtraBeds">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Room Fee (₱3,300/night):</span>
+                                <span id="summaryRoomFee">₱0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Extra Bed Fee (₱300/bed):</span>
+                                <span id="summaryExtraBedFee">₱0</span>
+                            </div>
+                            <div class="summary-item total-fee">
+                                <span><strong>Total Fee:</strong></span>
+                                <span id="summaryTotalFee"><strong>₱0</strong></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <span id="submitText">Submit Booking</span>
+                            <span id="submitLoading" class="loading-spinner" style="display: none;"></span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="booking-info">
+                    <div class="info-card">
+                        <h3>Booking Information</h3>
+                        <ul>
+                            <li>Check-in: after 2:00 PM</li>
+                            <li>Checkout: before 1:00 PM</li>
+                            <li>Air-conditioned rooms</li>
+                            <li>Free WiFi & workspace</li>
+                            <li>Kitchen & TV</li>
+                            <li>Free parking</li>
+                            <li>Pet-friendly 🐾</li>
+                            <li>2 comfy beds • 1 bath • up to 5 guests</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Contact Information</h3>
+                        <ul>
+                            <li>Phone: 0919 002 7790</li>
+                            <li>Email: rubiairbnb1@gmail.com</li>
+                            <li>Address: Purok 1, Malinao, General Luna, Siargao Islands</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Availability Calendar</h3>
+                        <div class="calendar-controls">
+                            <button class="btn-secondary" id="prevMonthBtn">← Previous</button>
+                            <span id="currentMonthYear">January 2025</span>
+                            <button class="btn-secondary" id="nextMonthBtn">Next →</button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Calendar will be generated here -->
+                        </div>
+                        <div class="calendar-legend">
+                            <div class="legend-item">
+                                <span class="legend-color available"></span>
+                                <span>Available</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color unavailable"></span>
+                                <span>Unavailable</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Booking Submitted Successfully!</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="success-content">
+                    <div class="success-icon">✅</div>
+                    <h3>Thank you for your booking!</h3>
+                    <p>Your reservation has been submitted successfully. We will contact you shortly to confirm your booking.</p>
+                    <div class="booking-details">
+                        <h4>Booking Details:</h4>
+                        <div id="bookingDetails"></div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-primary" onclick="window.location.href='index.html'">Back to Home</button>
+                        <button class="btn-secondary" onclick="printBooking()">Print Booking</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ARRIBA HOMESTAY. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDdF5kC7-fLx-KbPN-oj7bzef6ZzuR4FkU",
+            authDomain: "arribahomestay-7f961.firebaseapp.com",
+            projectId: "arribahomestay-7f961",
+            storageBucket: "arribahomestay-7f961.firebasestorage.app",
+            messagingSenderId: "614486684423",
+            appId: "1:614486684423:web:5eaed45cbca3b41cf9cba2",
+            measurementId: "G-2GDZFPQ5X5"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const messaging = getMessaging(app);
+
+        // Make Firebase available globally
+        window.auth = auth;
+        window.db = db;
+        window.messaging = messaging;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.signOut = signOut;
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.addDoc = addDoc;
+        window.getDocs = getDocs;
+        window.collection = collection;
+        window.query = query;
+        window.orderBy = orderBy;
+        window.getToken = getToken;
+        window.onMessage = onMessage;
+    </script>
+
+    <script src="js/main.js"></script>
+    <script src="js/firebase-auth.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/booking.js"></script>
+    <script src="js/booking-calendar.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

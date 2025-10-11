@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>ARRIBA HOMESTAY</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="images/logo.png" alt="ARRIBA HOMESTAY Logo" class="logo-img">
+                <h2>ARRIBA HOMESTAY</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a href="rooms.html" class="nav-link">ROOMS</a>
+                </li>
+                <li class="nav-item">
+                    <a href="gallery.html" class="nav-link">GALLERY</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">ABOUT US</a>
+                </li>
+                <li class="nav-item">
+                    <button class="account-btn" id="accountBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to ARRIBA HOMESTAY</h1>
+                <p>Experience paradise in the heart of Siargao Island</p>
+                <button class="cta-button" onclick="window.location.href='booking.html'">Book Now</button>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>Why Choose Us</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <img src="images/gallery/1.jpg" alt="Modern Room Interior" class="card-image">
+                        <h3>Modern Room Design</h3>
+                        <p>Clean, minimalist rooms with natural textures and contemporary amenities</p>
+                    </div>
+                    <div class="feature-card">
+                        <img src="images/gallery/2.jpg" alt="Spacious Living Area" class="card-image">
+                        <h3>Spacious Living Areas</h3>
+                        <p>Well-equipped kitchen and dining spaces perfect for comfortable stays</p>
+                    </div>
+                    <div class="feature-card">
+                        <img src="images/gallery/3.jpg" alt="Cozy Bedroom" class="card-image">
+                        <h3>Cozy Bedrooms</h3>
+                        <p>Comfortable sleeping areas with rustic charm and warm, inviting atmosphere</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Page Transition Overlay -->
+    <div id="pageTransition" class="page-transition">
+        <div class="page-transition-content">
+            <h2>Welcome to Admin Dashboard</h2>
+            <p>Redirecting you to the admin panel...</p>
+            <div class="page-transition-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ARRIBA HOMESTAY. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDdF5kC7-fLx-KbPN-oj7bzef6ZzuR4FkU",
+            authDomain: "arribahomestay-7f961.firebaseapp.com",
+            projectId: "arribahomestay-7f961",
+            storageBucket: "arribahomestay-7f961.firebasestorage.app",
+            messagingSenderId: "614486684423",
+            appId: "1:614486684423:web:5eaed45cbca3b41cf9cba2",
+            measurementId: "G-2GDZFPQ5X5"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const messaging = getMessaging(app);
+
+        // Make Firebase available globally
+        window.auth = auth;
+        window.messaging = messaging;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.signOut = signOut;
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.getToken = getToken;
+        window.onMessage = onMessage;
+    </script>
+
+    <script src="js/main.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/firebase-auth.js"></script>
+    <script src="js/notifications.js"></script>
+</body>
+</html>
+
+
+
+

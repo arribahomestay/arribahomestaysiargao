@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - ARRIBA HOMESTAY</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/gallery.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="images/logo.png" alt="ARRIBA HOMESTAY Logo" class="logo-img">
+                <h2>ARRIBA HOMESTAY</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a href="rooms.html" class="nav-link">ROOMS</a>
+                </li>
+                <li class="nav-item">
+                    <a href="gallery.html" class="nav-link active">GALLERY</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">ABOUT US</a>
+                </li>
+                <li class="nav-item">
+                    <button class="account-btn" id="accountBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="gallery-hero">
+            <div class="container">
+                <h1>Photo Gallery</h1>
+                <p>Discover the beauty of ARRIBA HOMESTAY through our stunning collection of photos</p>
+            </div>
+        </section>
+
+        <section class="gallery-filters">
+            <div class="container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="rooms">Rooms</button>
+                    <button class="filter-btn" data-filter="amenities">Amenities</button>
+                    <button class="filter-btn" data-filter="beach">Beach</button>
+                    <button class="filter-btn" data-filter="activities">Activities</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery-content">
+            <div class="container">
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-category="rooms">
+                        <div class="gallery-image">
+                            <img src="images/gallery/1.jpg" alt="Cozy Loft Living Area" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3>Cozy Loft Living Area</h3>
+                                <p>Bright living space with dining area and loft bedroom</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="rooms">
+                        <div class="gallery-image">
+                            <img src="images/gallery/2.jpg" alt="Spacious Open-Plan Interior" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3>Spacious Open-Plan Interior</h3>
+                                <p>Open-plan living area with kitchen and dining table</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="rooms">
+                        <div class="gallery-image">
+                            <img src="images/gallery/3.jpg" alt="Comfortable Loft Bedroom" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3>Comfortable Loft Bedroom</h3>
+                                <p>Queen bed with loft access via wooden stairs</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="rooms">
+                        <div class="gallery-image">
+                            <img src="images/gallery/4.jpg" alt="Inviting Bedroom with Loft Access" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3>Inviting Bedroom with Loft Access</h3>
+                                <p>Comfortable bedroom with wooden staircase to upper loft</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="beach">
+                        <div class="gallery-image">
+                            <img src="images/gallery/5.jpg" alt="Tropical Beachfront Garden" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3>Tropical Beachfront Garden</h3>
+                                <p>Garden with palm trees and thatched-roof huts</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="beach">
+                        <div class="gallery-image">
+                            <img src="images/gallery/6.jpg" alt="Pristine Sandy Beach" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3>Pristine Sandy Beach</h3>
+                                <p>Beautiful sandy beach with turquoise waters</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="beach">
+                        <div class="gallery-image">
+                            <img src="images/gallery/7.jpg" alt="Palm-Fringed Secluded Beach" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3>Palm-Fringed Secluded Beach</h3>
+                                <p>Secluded beach with palm trees along the shore</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="beach">
+                        <div class="gallery-image">
+                            <img src="images/gallery/8.jpg" alt="Beachfront Relaxation Area" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3>Beachfront Relaxation Area</h3>
+                                <p>Beachfront gazebo surrounded by palm trees</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="exterior">
+                        <div class="gallery-image">
+                            <img src="images/gallery/9.jpg" alt="Charming Two-Story Villa" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3>Charming Two-Story Villa</h3>
+                                <p>Two-story villa with balcony and tropical garden</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox Modal -->
+        <div id="lightbox" class="lightbox">
+            <div class="lightbox-content">
+                <span class="lightbox-close">&times;</span>
+                <img id="lightbox-image" src="" alt="">
+                <div class="lightbox-caption">
+                    <h3 id="lightbox-title"></h3>
+                    <p id="lightbox-description"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ARRIBA HOMESTAY. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDdF5kC7-fLx-KbPN-oj7bzef6ZzuR4FkU",
+            authDomain: "arribahomestay-7f961.firebaseapp.com",
+            projectId: "arribahomestay-7f961",
+            storageBucket: "arribahomestay-7f961.firebasestorage.app",
+            messagingSenderId: "614486684423",
+            appId: "1:614486684423:web:5eaed45cbca3b41cf9cba2",
+            measurementId: "G-2GDZFPQ5X5"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Make Firebase available globally
+        window.auth = auth;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.signOut = signOut;
+        window.onAuthStateChanged = onAuthStateChanged;
+    </script>
+
+    <script src="js/main.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/firebase-auth.js"></script>
+</body>
+</html>

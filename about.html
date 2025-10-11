@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ARRIBA HOMESTAY</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="images/logo.png" alt="ARRIBA HOMESTAY Logo" class="logo-img">
+                <h2>ARRIBA HOMESTAY</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a href="rooms.html" class="nav-link">ROOMS</a>
+                </li>
+                <li class="nav-item">
+                    <a href="gallery.html" class="nav-link">GALLERY</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link active">ABOUT US</a>
+                </li>
+                <li class="nav-item">
+                    <button class="account-btn" id="accountBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="about-hero">
+            <div class="container">
+            <h1>About ARRIBA HOMESTAY</h1>
+                <p>Discover our story and commitment to providing exceptional hospitality</p>
+        </div>
+    </section>
+
+        <section class="about-story">
+        <div class="container">
+                <div class="story-content">
+                    <div class="story-text">
+                    <h2>About Us</h2>
+                        <p>Welcome to Arriba Homestay, your cozy and affordable escape in the heart of Siargao! 🌴</p>
+                        <p>We're all about chill vibes, comfort, and simplicity — a place where you can relax, enjoy the island breeze, and feel at home. Whether you're here for the beach, the waves, or just a peaceful getaway, Arriba Homestay is the perfect spot for budget-friendly stays without sacrificing comfort.</p>
+                        <p>Come for the sun, stay for the good vibes 🌞✨</p>
+                    </div>
+                    <div class="story-image">
+                        <img src="images/gallery/9.jpg" alt="Arriba Homestay" class="story-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section class="contact-cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Experience Siargao?</h2>
+                    <p>Book your stay with us and discover why we're the premier choice for luxury accommodation in Siargao.</p>
+                    <button class="cta-button" onclick="window.location.href='booking.html'">Book Your Stay</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ARRIBA HOMESTAY. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDdF5kC7-fLx-KbPN-oj7bzef6ZzuR4FkU",
+            authDomain: "arribahomestay-7f961.firebaseapp.com",
+            projectId: "arribahomestay-7f961",
+            storageBucket: "arribahomestay-7f961.firebasestorage.app",
+            messagingSenderId: "614486684423",
+            appId: "1:614486684423:web:5eaed45cbca3b41cf9cba2",
+            measurementId: "G-2GDZFPQ5X5"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Make Firebase available globally
+        window.auth = auth;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.signOut = signOut;
+        window.onAuthStateChanged = onAuthStateChanged;
+    </script>
+
+    <script src="js/main.js"></script>
+    <script src="js/about.js"></script>
+    <script src="js/firebase-auth.js"></script>
+</body>
+</html>
+
+
