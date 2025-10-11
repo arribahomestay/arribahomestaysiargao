@@ -24,11 +24,79 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize booking page
     function initializeBookingPage() {
+        console.log('Initializing booking page...');
+        
+        // Check if device is mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        console.log('Device type:', isMobile ? 'Mobile' : 'Desktop');
+        
         setupEventListeners();
         loadAvailabilityData().then(() => {
-        setupDateValidation();
+            setupDateValidation();
         });
         setupFormValidation();
+        
+        // Mobile-specific initialization
+        if (isMobile) {
+            setupMobileOptimizations();
+        }
+        
+        // Initial summary update
+        setTimeout(() => {
+            updateBookingSummary();
+        }, 500);
+        
+        console.log('Booking page initialization complete');
+    }
+
+    // Setup mobile-specific optimizations
+    function setupMobileOptimizations() {
+        console.log('Setting up mobile optimizations...');
+        
+        // Add mobile-specific meta tags if not present
+        const viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) {
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+        }
+        
+        // Add mobile-specific CSS classes
+        document.body.classList.add('mobile-device');
+        
+        // Optimize form inputs for mobile
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.classList.add('mobile-optimized');
+            
+            // Add mobile-specific event listeners
+            input.addEventListener('focus', function() {
+                // Prevent zoom on iOS
+                if (this.type === 'date' || this.type === 'number') {
+                    this.style.fontSize = '16px';
+                }
+            });
+        });
+        
+        // Add mobile-specific touch handlers
+        const form = document.getElementById('bookingForm');
+        if (form) {
+            form.addEventListener('touchstart', function(e) {
+                // Add touch feedback
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
+                    e.target.style.backgroundColor = '#f8f9fa';
+                }
+            });
+            
+            form.addEventListener('touchend', function(e) {
+                // Remove touch feedback
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
+                    setTimeout(() => {
+                        e.target.style.backgroundColor = '';
+                    }, 150);
+                }
+            });
+        }
+        
+        console.log('Mobile optimizations complete');
     }
 
     // Setup event listeners
@@ -36,12 +104,20 @@ document.addEventListener('DOMContentLoaded', function() {
         // Form submission
         document.getElementById('bookingForm').addEventListener('submit', handleBookingSubmit);
 
-        // Form field changes for summary update
+        // Form field changes for summary update - Enhanced for mobile
         const formFields = ['checkInDate', 'checkOutDate', 'guests', 'extraBed'];
         formFields.forEach(fieldId => {
             const field = document.getElementById(fieldId);
             if (field) {
+                // Add multiple event listeners for better mobile compatibility
                 field.addEventListener('change', updateBookingSummary);
+                field.addEventListener('input', updateBookingSummary);
+                field.addEventListener('blur', updateBookingSummary);
+                
+                // For mobile devices, also listen to touch events
+                if ('ontouchstart' in window) {
+                    field.addEventListener('touchend', updateBookingSummary);
+                }
             }
         });
 
@@ -394,11 +470,20 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add visual styling for date inputs
         addDateInputStyling();
         
-        // Replace native date inputs with custom date pickers
-        replaceDateInputsWithCustomPickers();
+        // Check if device is mobile - use native date picker for better mobile experience
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            console.log('Mobile device detected, using native date picker');
+            // For mobile devices, use native date picker but add mobile-specific styling
+            setupMobileDateInputs(checkInDate, checkOutDate);
+        } else {
+            // For desktop, use custom date picker
+            replaceDateInputsWithCustomPickers();
+        }
 
-        // Update checkout date minimum when check-in date changes
-        checkInDate.addEventListener('change', function() {
+        // Enhanced date change handlers for mobile compatibility
+        const handleCheckInChange = function() {
             const checkInValue = this.dataset.value || this.value;
             if (checkInValue) {
                 // Validate check-in date availability
@@ -420,9 +505,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             updateBookingSummary();
-        });
+        };
 
-        checkOutDate.addEventListener('change', function() {
+        const handleCheckOutChange = function() {
             const checkOutValue = this.dataset.value || this.value;
             if (checkOutValue) {
                 // Validate check-out date availability
@@ -451,6 +536,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             updateBookingSummary();
+        };
+
+        // Add multiple event listeners for better mobile compatibility
+        checkInDate.addEventListener('change', handleCheckInChange);
+        checkInDate.addEventListener('input', handleCheckInChange);
+        checkInDate.addEventListener('blur', handleCheckInChange);
+        
+        checkOutDate.addEventListener('change', handleCheckOutChange);
+        checkOutDate.addEventListener('input', handleCheckOutChange);
+        checkOutDate.addEventListener('blur', handleCheckOutChange);
+        
+        // For mobile devices, also listen to touch events
+        if ('ontouchstart' in window) {
+            checkInDate.addEventListener('touchend', handleCheckInChange);
+            checkOutDate.addEventListener('touchend', handleCheckOutChange);
+        }
+    }
+
+    // Setup mobile-optimized date inputs
+    function setupMobileDateInputs(checkInDate, checkOutDate) {
+        // Add mobile-specific styling
+        checkInDate.style.fontSize = '16px'; // Prevents zoom on iOS
+        checkOutDate.style.fontSize = '16px';
+        
+        // Add mobile-specific attributes
+        checkInDate.setAttribute('data-mobile', 'true');
+        checkOutDate.setAttribute('data-mobile', 'true');
+        
+        // Add visual feedback for mobile
+        [checkInDate, checkOutDate].forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.borderColor = '#3498db';
+                this.style.backgroundColor = '#f8f9fa';
+            });
+            
+            input.addEventListener('blur', function() {
+                if (this.value && !isDateAvailable(this.value)) {
+                    this.style.borderColor = '#e74c3c';
+                    this.style.backgroundColor = '#fdf2f2';
+                } else {
+                    this.style.borderColor = '#27ae60';
+                    this.style.backgroundColor = '#f0fff4';
+                }
+            });
         });
     }
 
@@ -540,49 +669,107 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Update booking summary
+    // Update booking summary - Enhanced for mobile compatibility
     function updateBookingSummary() {
-        const checkInInput = document.getElementById('checkInDate');
-        const checkOutInput = document.getElementById('checkOutDate');
-        const checkInDate = checkInInput.dataset.value || checkInInput.value;
-        const checkOutDate = checkOutInput.dataset.value || checkOutInput.value;
-        const guests = parseInt(document.getElementById('guests').value) || 0;
-        const extraBed = parseInt(document.getElementById('extraBed').value) || 0;
+        try {
+            console.log('Updating booking summary...');
+            
+            const checkInInput = document.getElementById('checkInDate');
+            const checkOutInput = document.getElementById('checkOutDate');
+            const guestsInput = document.getElementById('guests');
+            const extraBedInput = document.getElementById('extraBed');
+            
+            // Get values with fallbacks for mobile compatibility
+            const checkInDate = checkInInput?.dataset?.value || checkInInput?.value || '';
+            const checkOutDate = checkOutInput?.dataset?.value || checkOutInput?.value || '';
+            const guests = parseInt(guestsInput?.value) || 0;
+            const extraBed = parseInt(extraBedInput?.value) || 0;
 
-        // Update summary fields
-        document.getElementById('summaryGuests').textContent = guests || '-';
-        document.getElementById('summaryExtraBeds').textContent = extraBed || '0';
+            console.log('Summary values:', { checkInDate, checkOutDate, guests, extraBed });
 
-        // Calculate duration and fees
-        if (checkInDate && checkOutDate) {
-            const checkIn = new Date(checkInDate);
-            const checkOut = new Date(checkOutDate);
-            const duration = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-            document.getElementById('summaryDuration').textContent = `${duration} night${duration !== 1 ? 's' : ''}`;
-            
-            // Calculate fees
-            const roomFeePerNight = 3300;
-            const extraBedFeePerBed = 300;
-            
-            const roomFee = duration * roomFeePerNight;
-            const extraBedFee = extraBed * extraBedFeePerBed;
-            const totalFee = roomFee + extraBedFee;
-            
-            // Update fee displays
-            document.getElementById('summaryRoomFee').textContent = `₱${roomFee.toLocaleString()}`;
-            document.getElementById('summaryExtraBedFee').textContent = `₱${extraBedFee.toLocaleString()}`;
-            document.getElementById('summaryTotalFee').innerHTML = `<strong>₱${totalFee.toLocaleString()}</strong>`;
-        } else {
-            document.getElementById('summaryDuration').textContent = '-';
-            document.getElementById('summaryRoomFee').textContent = '₱0';
-            document.getElementById('summaryExtraBedFee').textContent = '₱0';
-            document.getElementById('summaryTotalFee').innerHTML = '<strong>₱0</strong>';
+            // Update summary fields with null checks
+            const summaryGuests = document.getElementById('summaryGuests');
+            const summaryExtraBeds = document.getElementById('summaryExtraBeds');
+            const summaryDuration = document.getElementById('summaryDuration');
+            const summaryRoomFee = document.getElementById('summaryRoomFee');
+            const summaryExtraBedFee = document.getElementById('summaryExtraBedFee');
+            const summaryTotalFee = document.getElementById('summaryTotalFee');
+
+            if (summaryGuests) summaryGuests.textContent = guests || '-';
+            if (summaryExtraBeds) summaryExtraBeds.textContent = extraBed || '0';
+
+            // Calculate duration and fees
+            if (checkInDate && checkOutDate) {
+                const checkIn = new Date(checkInDate);
+                const checkOut = new Date(checkOutDate);
+                
+                // Validate dates
+                if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) {
+                    console.log('Invalid dates detected');
+                    resetSummaryDisplay();
+                    return;
+                }
+                
+                const duration = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+                
+                if (duration <= 0) {
+                    console.log('Invalid duration:', duration);
+                    resetSummaryDisplay();
+                    return;
+                }
+                
+                if (summaryDuration) summaryDuration.textContent = `${duration} night${duration !== 1 ? 's' : ''}`;
+                
+                // Calculate fees
+                const roomFeePerNight = 3300;
+                const extraBedFeePerBed = 300;
+                
+                const roomFee = duration * roomFeePerNight;
+                const extraBedFee = extraBed * extraBedFeePerBed;
+                const totalFee = roomFee + extraBedFee;
+                
+                console.log('Calculated fees:', { duration, roomFee, extraBedFee, totalFee });
+                
+                // Update fee displays with formatting
+                if (summaryRoomFee) summaryRoomFee.textContent = `₱${roomFee.toLocaleString()}`;
+                if (summaryExtraBedFee) summaryExtraBedFee.textContent = `₱${extraBedFee.toLocaleString()}`;
+                if (summaryTotalFee) summaryTotalFee.innerHTML = `<strong>₱${totalFee.toLocaleString()}</strong>`;
+                
+                // Add visual feedback for mobile
+                if (summaryTotalFee) {
+                    summaryTotalFee.style.animation = 'none';
+                    setTimeout(() => {
+                        summaryTotalFee.style.animation = 'pulse 0.5s ease-in-out';
+                    }, 10);
+                }
+            } else {
+                console.log('Missing dates, resetting summary');
+                resetSummaryDisplay();
+            }
+        } catch (error) {
+            console.error('Error updating booking summary:', error);
+            resetSummaryDisplay();
         }
     }
 
-    // Handle booking form submission
+    // Reset summary display to default values
+    function resetSummaryDisplay() {
+        const summaryDuration = document.getElementById('summaryDuration');
+        const summaryRoomFee = document.getElementById('summaryRoomFee');
+        const summaryExtraBedFee = document.getElementById('summaryExtraBedFee');
+        const summaryTotalFee = document.getElementById('summaryTotalFee');
+
+        if (summaryDuration) summaryDuration.textContent = '-';
+        if (summaryRoomFee) summaryRoomFee.textContent = '₱0';
+        if (summaryExtraBedFee) summaryExtraBedFee.textContent = '₱0';
+        if (summaryTotalFee) summaryTotalFee.innerHTML = '<strong>₱0</strong>';
+    }
+
+    // Handle booking form submission - Enhanced for mobile compatibility
     async function handleBookingSubmit(e) {
         e.preventDefault();
+        
+        console.log('Booking form submission started...');
 
         // Validate all fields
         const form = e.target;
@@ -600,15 +787,31 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Get form data
+        // Get form data with mobile compatibility
         const formData = new FormData(form);
         
-        // Validate availability for selected dates
+        // Validate availability for selected dates - Enhanced for mobile
         const checkInInput = document.getElementById('checkInDate');
         const checkOutInput = document.getElementById('checkOutDate');
-        const checkInDate = checkInInput.dataset.value || formData.get('checkInDate');
-        const checkOutDate = checkOutInput.dataset.value || formData.get('checkOutDate');
         
+        // Get dates with multiple fallbacks for mobile compatibility
+        let checkInDate = checkInInput?.dataset?.value || checkInInput?.value || formData.get('checkInDate');
+        let checkOutDate = checkOutInput?.dataset?.value || checkOutInput?.value || formData.get('checkOutDate');
+        
+        console.log('Date values:', { 
+            checkInDate, 
+            checkOutDate, 
+            datasetValue: checkInInput?.dataset?.value,
+            inputValue: checkInInput?.value 
+        });
+        
+        // Validate dates exist
+        if (!checkInDate || !checkOutDate) {
+            alert('Please select both check-in and check-out dates.');
+            return;
+        }
+        
+        // Validate date format and availability
         if (!isDateAvailable(checkInDate)) {
             alert('Selected check-in date is no longer available. Please choose another date.');
             return;
@@ -623,7 +826,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const startDate = new Date(checkInDate);
         const endDate = new Date(checkOutDate);
         
-        for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        // Validate date objects
+        if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+            alert('Invalid date format. Please select valid dates.');
+            return;
+        }
+        
+        // Check date range validity
+        if (startDate >= endDate) {
+            alert('Check-out date must be after check-in date.');
+            return;
+        }
+        
+        for (let d = new Date(startDate); d < endDate; d.setDate(d.getDate() + 1)) {
             const dateString = d.toISOString().split('T')[0];
             if (!isDateAvailable(dateString)) {
                 alert(`Date ${dateString} is no longer available. Please choose different dates.`);
@@ -631,11 +846,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Calculate fees
-        const checkIn = new Date(checkInDate);
-        const checkOut = new Date(checkOutDate);
-        const duration = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+        // Calculate fees with validation
+        const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
         const extraBed = parseInt(formData.get('extraBed')) || 0;
+        const guests = parseInt(formData.get('guests')) || 1;
+        
+        if (duration <= 0) {
+            alert('Invalid booking duration. Please check your dates.');
+            return;
+        }
         
         const roomFeePerNight = 3300;
         const extraBedFeePerBed = 300;
@@ -643,11 +862,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const extraBedFee = extraBed * extraBedFeePerBed;
         const totalFee = roomFee + extraBedFee;
         
-        // Debug date values
-        console.log('Check-in date:', checkInDate);
-        console.log('Check-out date:', checkOutDate);
-        console.log('Check-in input dataset:', checkInInput.dataset.value);
-        console.log('Check-out input dataset:', checkOutInput.dataset.value);
+        console.log('Calculated booking details:', { duration, guests, extraBed, roomFee, extraBedFee, totalFee });
         
         const bookingData = {
             guestName: formData.get('fullName'),
@@ -655,11 +870,11 @@ document.addEventListener('DOMContentLoaded', function() {
             countryCode: formData.get('countryCode'),
             phoneNumber: formData.get('phoneNumber'),
             phone: `${formData.get('countryCode')} ${formData.get('phoneNumber')}`,
-            checkIn: checkInDate, // Use the ISO date from custom picker
-            checkOut: checkOutDate, // Use the ISO date from custom picker
-            guests: parseInt(formData.get('guests')),
+            checkIn: checkInDate,
+            checkOut: checkOutDate,
+            guests: guests,
             extraBed: extraBed,
-            specialRequests: formData.get('specialRequests'),
+            specialRequests: formData.get('specialRequests') || '',
             duration: duration,
             roomFeePerNight: roomFeePerNight,
             extraBedFeePerBed: extraBedFeePerBed,
@@ -668,21 +883,33 @@ document.addEventListener('DOMContentLoaded', function() {
             totalFee: totalFee,
             status: 'pending',
             createdAt: new Date(),
-            updatedAt: new Date()
+            updatedAt: new Date(),
+            // Add mobile-specific metadata
+            userAgent: navigator.userAgent,
+            isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
         };
 
-        // Show loading state
+        // Show loading state with mobile-optimized feedback
         const submitBtn = document.getElementById('submitBtn');
         const submitText = document.getElementById('submitText');
         const submitLoading = document.getElementById('submitLoading');
         
-        submitBtn.disabled = true;
-        submitText.style.display = 'none';
-        submitLoading.style.display = 'inline-block';
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+        }
+        if (submitText) submitText.style.display = 'none';
+        if (submitLoading) submitLoading.style.display = 'inline-block';
 
         try {
             // Save booking to Firestore
             console.log('Attempting to save booking:', bookingData);
+            
+            // Check if Firebase is available
+            if (!db || !addDoc || !collection) {
+                throw new Error('Firebase not initialized');
+            }
+            
             const docRef = await addDoc(collection(db, 'bookings'), bookingData);
             console.log('Booking saved successfully with ID:', docRef.id);
             
@@ -691,6 +918,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Trigger notification for admin
             if (window.addBookingNotification) {
+                console.log('Triggering admin notification...');
                 window.addBookingNotification(bookingData, docRef.id);
             }
             
@@ -701,26 +929,35 @@ document.addEventListener('DOMContentLoaded', function() {
             resetBookingForm();
             updateBookingSummary();
             
+            console.log('Booking submission completed successfully');
+            
         } catch (error) {
             console.error('Error saving booking:', error);
             
-            // More detailed error handling
+            // More detailed error handling for mobile
             let errorMessage = 'Error submitting booking. Please try again.';
             
             if (error.code === 'permission-denied') {
                 errorMessage = 'Permission denied. Please check Firebase security rules.';
             } else if (error.code === 'unavailable') {
-                errorMessage = 'Service temporarily unavailable. Please try again later.';
+                errorMessage = 'Service temporarily unavailable. Please check your internet connection and try again.';
             } else if (error.code === 'invalid-argument') {
                 errorMessage = 'Invalid data provided. Please check your input.';
+            } else if (error.message.includes('Firebase not initialized')) {
+                errorMessage = 'Service not available. Please refresh the page and try again.';
             }
             
+            // Show error with mobile-friendly alert
             alert(errorMessage);
+            
         } finally {
             // Reset button state
-            submitBtn.disabled = false;
-            submitText.style.display = 'inline';
-            submitLoading.style.display = 'none';
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            }
+            if (submitText) submitText.style.display = 'inline';
+            if (submitLoading) submitLoading.style.display = 'none';
         }
     }
 
@@ -856,6 +1093,54 @@ document.addEventListener('DOMContentLoaded', function() {
             day: 'numeric'
         });
     }
+
+    // Debug function for mobile troubleshooting
+    window.debugBookingForm = function() {
+        console.log('=== Booking Form Debug Info ===');
+        console.log('Device:', /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop');
+        console.log('User Agent:', navigator.userAgent);
+        console.log('Firebase available:', !!window.db);
+        console.log('Form elements:');
+        
+        const form = document.getElementById('bookingForm');
+        if (form) {
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                console.log(`${input.id}:`, {
+                    value: input.value,
+                    datasetValue: input.dataset.value,
+                    type: input.type,
+                    required: input.required
+                });
+            });
+        }
+        
+        console.log('Availability data loaded:', Object.keys(availabilityData).length, 'dates');
+        console.log('Current booking summary:');
+        updateBookingSummary();
+        
+        console.log('=== End Debug Info ===');
+    };
+
+    // Test booking submission (for debugging)
+    window.testBookingSubmission = function() {
+        console.log('Testing booking submission...');
+        
+        // Fill form with test data
+        document.getElementById('fullName').value = 'Test User';
+        document.getElementById('email').value = 'test@example.com';
+        document.getElementById('countryCode').value = '+63';
+        document.getElementById('phoneNumber').value = '9123456789';
+        document.getElementById('checkInDate').value = '2025-02-01';
+        document.getElementById('checkOutDate').value = '2025-02-03';
+        document.getElementById('guests').value = '2';
+        document.getElementById('extraBed').value = '1';
+        
+        // Update summary
+        updateBookingSummary();
+        
+        console.log('Test data filled. You can now submit the form manually.');
+    };
 });
 
 

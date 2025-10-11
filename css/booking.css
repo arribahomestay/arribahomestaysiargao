@@ -1092,3 +1092,86 @@
 .legend-color.unavailable {
     background-color: #f8d7da;
 }
+
+/* Mobile-specific improvements */
+@media screen and (max-width: 768px) {
+    /* Mobile-specific form improvements */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        padding: 1rem;
+        border-radius: 8px;
+    }
+    
+    /* Mobile date input styling */
+    input[type="date"] {
+        font-size: 16px !important;
+        padding: 1rem;
+        min-height: 48px; /* Better touch target */
+    }
+    
+    /* Mobile number input styling */
+    input[type="number"] {
+        font-size: 16px !important;
+        padding: 1rem;
+        min-height: 48px;
+    }
+    
+    /* Mobile submit button improvements */
+    .submit-btn {
+        min-height: 48px;
+        font-size: 1.1rem;
+        padding: 1.2rem 2rem;
+    }
+    
+    /* Mobile booking summary improvements */
+    .booking-summary {
+        margin: 1.5rem 0;
+        padding: 1.5rem;
+    }
+    
+    .summary-item {
+        padding: 0.75rem 0;
+        font-size: 1rem;
+    }
+    
+    .summary-item.total-fee {
+        font-size: 1.2rem;
+        padding: 1.2rem;
+    }
+    
+    /* Mobile-specific animations */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    /* Mobile touch feedback */
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        transform: scale(1.02);
+        transition: transform 0.2s ease;
+    }
+    
+    /* Mobile-specific loading states */
+    .submit-btn:disabled {
+        opacity: 0.7;
+        transform: none;
+    }
+    
+    /* Mobile notification improvements */
+    .in-app-notification {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        z-index: 10000;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        padding: 1rem;
+    }
+}
