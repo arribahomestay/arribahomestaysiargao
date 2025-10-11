@@ -310,41 +310,41 @@ function isDateAvailable(dateString) {
     return availabilityData[dateString] === 'available';
 }
 
-    // Add visual indicators to date inputs
-    function addDateInputStyling() {
-        const checkInDate = document.getElementById('checkInDate');
-        const checkOutDate = document.getElementById('checkOutDate');
-        
-        // Add event listeners for visual feedback
-        [checkInDate, checkOutDate].forEach(input => {
-            input.addEventListener('focus', function() {
-                this.style.borderColor = '#3498db';
-            });
-            
-            input.addEventListener('blur', function() {
-                if (this.value && !isDateAvailable(this.value)) {
-                    this.style.borderColor = '#e74c3c';
-                    this.style.backgroundColor = '#fdf2f2';
-                } else {
-                    this.style.borderColor = '#ddd';
-                    this.style.backgroundColor = 'white';
-                }
-            });
-            
-            input.addEventListener('change', function() {
-                if (this.value && !isDateAvailable(this.value)) {
-                    this.style.borderColor = '#e74c3c';
-                    this.style.backgroundColor = '#fdf2f2';
-                } else {
-                    this.style.borderColor = '#27ae60';
-                    this.style.backgroundColor = '#f0fff4';
-                }
-            });
+// Add visual indicators to date inputs
+function addDateInputStyling() {
+    const checkInDate = document.getElementById('checkInDate');
+    const checkOutDate = document.getElementById('checkOutDate');
+    
+    // Add event listeners for visual feedback
+    [checkInDate, checkOutDate].forEach(input => {
+        input.addEventListener('focus', function() {
+            this.style.borderColor = '#3498db';
         });
-    }
+        
+        input.addEventListener('blur', function() {
+            if (this.value && !isDateAvailable(this.value)) {
+                this.style.borderColor = '#e74c3c';
+                this.style.backgroundColor = '#fdf2f2';
+            } else {
+                this.style.borderColor = '#ddd';
+                this.style.backgroundColor = 'white';
+            }
+        });
+        
+        input.addEventListener('change', function() {
+            if (this.value && !isDateAvailable(this.value)) {
+                this.style.borderColor = '#e74c3c';
+                this.style.backgroundColor = '#fdf2f2';
+            } else {
+                this.style.borderColor = '#27ae60';
+                this.style.backgroundColor = '#f0fff4';
+            }
+        });
+    });
+}
 
-    // Replace native date inputs with custom date pickers
-    function replaceDateInputsWithCustomPickers() {
+// Replace native date inputs with custom date pickers
+function replaceDateInputsWithCustomPickers() {
         const checkInDate = document.getElementById('checkInDate');
         const checkOutDate = document.getElementById('checkOutDate');
         
