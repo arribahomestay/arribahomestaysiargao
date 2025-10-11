@@ -210,9 +210,11 @@ function setupMobileOptimizations() {
     const form = document.getElementById('bookingForm');
     if (form) {
         form.addEventListener('submit', handleBookingSubmit);
-        console.log('Form submission listener added');
+        console.log('✅ Form submission listener added to:', form);
+        console.log('✅ Form action:', form.action);
+        console.log('✅ Form method:', form.method);
     } else {
-        console.error('Booking form not found!');
+        console.error('❌ Booking form not found!');
     }
 
     // Form field changes for summary update - Enhanced for mobile devices
@@ -533,7 +535,7 @@ function resetSummaryDisplay() {
     async function handleBookingSubmit(e) {
         e.preventDefault();
 
-    console.log('Booking form submission started...');
+    console.log('🚀 BOOKING FORM SUBMISSION STARTED - handleBookingSubmit called!');
     
     // Show loading state
     const submitBtn = document.getElementById('submitBtn');

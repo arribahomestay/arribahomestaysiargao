@@ -62,7 +62,7 @@
                         <p>Please fill out the form below to make your reservation</p>
                     </div>
 
-                    <form id="bookingForm" class="booking-form">
+                    <form id="bookingForm" class="booking-form" action="javascript:void(0);" method="post">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="fullName">FULL NAME *</label>
@@ -298,8 +298,8 @@
             <div class="modal-body">
                 <form id="loginForm">
                     <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
+                        <label for="loginEmail">Email:</label>
+                        <input type="email" id="loginEmail" name="email" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password:</label>
@@ -388,7 +388,7 @@
     </script>
 
     <script src="js/main.js"></script>
-    <script src="js/firebase-auth.js?v=1.0.3"></script>
+    <script src="js/firebase-auth.js?v=1.0.4"></script>
     <script src="js/notifications.js"></script>
     <script src="js/booking.js?v=1.0.2"></script>
     <script src="js/booking-calendar.js"></script>
