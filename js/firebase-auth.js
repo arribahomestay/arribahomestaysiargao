@@ -89,22 +89,11 @@ async function debugFirebaseAuth() {
     console.log('Auth config:', window.auth?.app?.options);
     console.log('Current user:', window.auth?.currentUser);
     
-    // Test Firebase connection
-    try {
-        const testEmail = 'test@example.com';
-        const testPassword = 'testpassword123';
-        console.log('Testing Firebase connection...');
-        
-        // This will fail but will show us if Firebase is working
-        await signInWithEmailAndPassword(window.auth, testEmail, testPassword);
-    } catch (error) {
-        console.log('Expected error (Firebase is working):', error.code, error.message);
-        
-        if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
-            console.log('✅ Firebase Authentication is working correctly');
-        } else {
-            console.log('❌ Firebase Authentication issue:', error);
-        }
+    // Test Firebase connection without attempting sign-in
+    if (window.auth && window.auth.app) {
+        console.log('✅ Firebase Authentication is properly initialized');
+    } else {
+        console.log('❌ Firebase Authentication not properly initialized');
     }
 }
 
