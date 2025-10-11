@@ -185,7 +185,15 @@
         margin-bottom: 1rem;
     }
     
-    .tab-btn {
+    /* Admin tab buttons - mobile specific */
+    .admin-tabs .tab-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        border-bottom: none;
+    }
+    
+    .admin-tabs .tab-btn {
         padding: 1rem;
         font-size: 1rem;
         border-radius: 8px;
@@ -194,15 +202,46 @@
         transition: all 0.3s ease;
         text-align: center;
         width: 100%;
+        color: #6c757d;
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 0.5rem;
+        border-bottom: none;
     }
     
-    .tab-btn:hover,
-    .tab-btn.active {
+    .admin-tabs .tab-btn:hover,
+    .admin-tabs .tab-btn.active {
         background: #3498db;
-        color: white;
+        color: white !important;
         border-color: #3498db;
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+    
+    .admin-tabs .tab-btn.active {
+        background: #3498db !important;
+        color: white !important;
+        border-color: #3498db !important;
+    }
+    
+    /* Ensure tab content is visible */
+    .tab-content {
+        display: none;
+        width: 100%;
+    }
+    
+    .tab-content.active {
+        display: block !important;
+    }
+    
+    /* Touch-friendly button improvements */
+    .admin-tabs .tab-btn {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
     
     /* Header Controls */

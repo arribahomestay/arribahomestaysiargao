@@ -195,13 +195,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Setup event listeners
     function setupEventListeners() {
-        // Tab switching
-        const tabButtons = document.querySelectorAll('.tab-btn');
+        // Tab switching - improved for mobile
+        const tabButtons = document.querySelectorAll('.admin-tabs .tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
 
+        console.log('Setting up tab buttons:', tabButtons.length);
+        
         tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
                 const tabId = button.getAttribute('data-tab');
+                console.log('Tab clicked:', tabId);
                 
                 // Remove active class from all tabs and contents
                 tabButtons.forEach(btn => btn.classList.remove('active'));
@@ -209,7 +215,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Add active class to clicked tab and corresponding content
                 button.classList.add('active');
-                document.getElementById(`${tabId}-tab`).classList.add('active');
+                const targetContent = document.getElementById(`${tabId}-tab`);
+                
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                    console.log('Switched to tab:', tabId);
+                } else {
+                    console.error('Tab content not found:', `${tabId}-tab`);
+                }
             });
         });
 

@@ -6,6 +6,7 @@
                 url('../images/hero.png');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed; /* Better parallax effect */
     height: 100vh;
     display: flex;
     align-items: center;
@@ -14,6 +15,7 @@
     color: white;
     margin-top: 70px;
     position: relative;
+    will-change: transform; /* Optimize for animations */
 }
 
 .hero::before {
@@ -95,6 +97,17 @@
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
+    /* Mobile optimizations for hero section */
+    .hero {
+        background-attachment: scroll; /* Disable fixed attachment on mobile */
+        will-change: auto; /* Disable will-change on mobile */
+        transform: none !important; /* Force disable any transforms */
+    }
+    
+    .hero::before {
+        display: none; /* Remove blur effect on mobile for better performance */
+    }
+    
     .hero-content h1 {
         font-size: 2.8rem;
     }
@@ -110,6 +123,17 @@
     .features-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+    }
+    
+    /* Disable hover effects on mobile */
+    .feature-card:hover {
+        transform: none;
+    }
+    
+    /* Add touch-friendly interactions */
+    .feature-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
     }
 }
 
