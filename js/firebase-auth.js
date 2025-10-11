@@ -72,6 +72,12 @@ function getCurrentUser() {
 
 // Monitor auth state changes
 function onAuthStateChange(callback) {
+    // Wait for Firebase to be ready
+    if (!window.onAuthStateChanged || !window.auth) {
+        console.log('Firebase not ready yet, retrying in 100ms...');
+        setTimeout(() => onAuthStateChange(callback), 100);
+        return;
+    }
     return window.onAuthStateChanged(window.auth, callback);
 }
 
