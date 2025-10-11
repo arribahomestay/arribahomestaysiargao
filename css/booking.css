@@ -1093,6 +1093,27 @@
     background-color: #f8d7da;
 }
 
+/* iOS Safari specific fixes */
+.ios-safari .modal {
+    z-index: 999999 !important;
+    position: fixed !important;
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+}
+
+.ios-safari .modal-content {
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+    will-change: transform;
+}
+
+.ios-safari input[type="date"],
+.ios-safari input[type="number"] {
+    font-size: 16px !important;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
 /* Mobile-specific improvements */
 @media screen and (max-width: 768px) {
     /* Mobile-specific form improvements */
@@ -1173,5 +1194,17 @@
         border-radius: 10px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         padding: 1rem;
+    }
+    
+    /* iOS Safari modal fixes */
+    .modal {
+        z-index: 999999 !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .modal-content {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        will-change: transform;
     }
 }

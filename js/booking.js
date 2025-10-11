@@ -22,31 +22,96 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize booking page
     initializeBookingPage();
 
-    // Initialize booking page
+    // Initialize booking page - iOS Safari Compatible
     function initializeBookingPage() {
         console.log('Initializing booking page...');
         
-        // Check if device is mobile
+        // Check if device is mobile and iOS Safari
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isIOSSafari = /iPad|iPhone|iPod/.test(navigator.userAgent) && /Safari/.test(navigator.userAgent);
         console.log('Device type:', isMobile ? 'Mobile' : 'Desktop');
+        console.log('iOS Safari:', isIOSSafari);
         
-        setupEventListeners();
-        loadAvailabilityData().then(() => {
-            setupDateValidation();
-        });
-        setupFormValidation();
-        
-        // Mobile-specific initialization
-        if (isMobile) {
-            setupMobileOptimizations();
+        // Wait for Firebase initialization on iOS Safari
+        if (isIOSSafari) {
+            waitForFirebaseInitialization().then(() => {
+                setupEventListeners();
+                loadAvailabilityData().then(() => {
+                    setupDateValidation();
+                });
+                setupFormValidation();
+                setupIOSOptimizations();
+                
+                // Initial summary update with delay for iOS Safari
+                setTimeout(() => {
+                    updateBookingSummary();
+                }, 1000);
+            });
+        } else {
+            setupEventListeners();
+            loadAvailabilityData().then(() => {
+                setupDateValidation();
+            });
+            setupFormValidation();
+            
+            // Mobile-specific initialization
+            if (isMobile) {
+                setupMobileOptimizations();
+            }
+            
+            // Initial summary update
+            setTimeout(() => {
+                updateBookingSummary();
+            }, 500);
         }
         
-        // Initial summary update
-        setTimeout(() => {
-            updateBookingSummary();
-        }, 500);
-        
         console.log('Booking page initialization complete');
+    }
+
+    // Wait for Firebase initialization on iOS Safari
+    function waitForFirebaseInitialization() {
+        return new Promise((resolve) => {
+            const checkFirebase = () => {
+                if (window.firebaseInitialized && window.db) {
+                    console.log('Firebase ready for iOS Safari');
+                    resolve();
+                } else {
+                    console.log('Waiting for Firebase initialization...');
+                    setTimeout(checkFirebase, 100);
+                }
+            };
+            checkFirebase();
+        });
+    }
+
+    // iOS Safari specific optimizations
+    function setupIOSOptimizations() {
+        console.log('Setting up iOS Safari optimizations...');
+        
+        // Add iOS Safari specific CSS classes
+        document.body.classList.add('ios-safari');
+        
+        // Fix iOS Safari modal z-index issues
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            modal.style.zIndex = '999999';
+            modal.style.position = 'fixed';
+            modal.style.webkitTransform = 'translateZ(0)';
+            modal.style.transform = 'translateZ(0)';
+        });
+        
+        // iOS Safari specific touch handling
+        const form = document.getElementById('bookingForm');
+        if (form) {
+            form.addEventListener('touchstart', function(e) {
+                // Prevent iOS Safari zoom on form inputs
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
+                    e.target.style.fontSize = '16px';
+                }
+            }, { passive: true });
+        }
+        
+        console.log('iOS Safari optimizations complete');
     }
 
     // Setup mobile-specific optimizations
@@ -99,24 +164,42 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Mobile optimizations complete');
     }
 
-    // Setup event listeners
+    // Setup event listeners - iOS Safari Compatible
     function setupEventListeners() {
         // Form submission
         document.getElementById('bookingForm').addEventListener('submit', handleBookingSubmit);
 
-        // Form field changes for summary update - Enhanced for mobile
+        // Form field changes for summary update - Enhanced for iOS Safari
         const formFields = ['checkInDate', 'checkOutDate', 'guests', 'extraBed'];
         formFields.forEach(fieldId => {
             const field = document.getElementById(fieldId);
             if (field) {
-                // Add multiple event listeners for better mobile compatibility
-                field.addEventListener('change', updateBookingSummary);
-                field.addEventListener('input', updateBookingSummary);
-                field.addEventListener('blur', updateBookingSummary);
-                
-                // For mobile devices, also listen to touch events
-                if ('ontouchstart' in window) {
-                    field.addEventListener('touchend', updateBookingSummary);
+                // iOS Safari specific event handling
+                if (window.isIOSSafari) {
+                    // iOS Safari requires specific event handling
+                    field.addEventListener('change', function() {
+                        setTimeout(updateBookingSummary, 100);
+                    });
+                    field.addEventListener('input', function() {
+                        setTimeout(updateBookingSummary, 100);
+                    });
+                    field.addEventListener('blur', function() {
+                        setTimeout(updateBookingSummary, 100);
+                    });
+                    // iOS Safari touch events
+                    field.addEventListener('touchend', function() {
+                        setTimeout(updateBookingSummary, 100);
+                    });
+                } else {
+                    // Standard event listeners for other browsers
+                    field.addEventListener('change', updateBookingSummary);
+                    field.addEventListener('input', updateBookingSummary);
+                    field.addEventListener('blur', updateBookingSummary);
+                    
+                    // For mobile devices, also listen to touch events
+                    if ('ontouchstart' in window) {
+                        field.addEventListener('touchend', updateBookingSummary);
+                    }
                 }
             }
         });
@@ -902,34 +985,82 @@ document.addEventListener('DOMContentLoaded', function() {
         if (submitLoading) submitLoading.style.display = 'inline-block';
 
         try {
-            // Save booking to Firestore
+            // Save booking to Firestore - iOS Safari Compatible
             console.log('Attempting to save booking:', bookingData);
             
-            // Check if Firebase is available
-            if (!db || !addDoc || !collection) {
-                throw new Error('Firebase not initialized');
+            // Check if Firebase is available with iOS Safari compatibility
+            if (!window.firebaseInitialized || !db || !addDoc || !collection) {
+                throw new Error('Firebase not initialized - iOS Safari compatibility issue');
             }
             
-            const docRef = await addDoc(collection(db, 'bookings'), bookingData);
-            console.log('Booking saved successfully with ID:', docRef.id);
-            
-            // Store booking data for success modal
-            currentBooking = bookingData;
-            
-            // Trigger notification for admin
-            if (window.addBookingNotification) {
-                console.log('Triggering admin notification...');
-                window.addBookingNotification(bookingData, docRef.id);
+            // iOS Safari specific Firebase handling
+            if (window.isIOSSafari) {
+                // Add retry logic for iOS Safari
+                let retryCount = 0;
+                const maxRetries = 3;
+                
+                while (retryCount < maxRetries) {
+                    try {
+                        const docRef = await addDoc(collection(db, 'bookings'), bookingData);
+                        console.log('Booking saved successfully with ID:', docRef.id);
+                        
+                        // Store booking data for success modal
+                        currentBooking = bookingData;
+                        
+                        // Trigger notification for admin with iOS Safari compatibility
+                        if (window.addBookingNotification) {
+                            console.log('Triggering admin notification...');
+                            setTimeout(() => {
+                                window.addBookingNotification(bookingData, docRef.id);
+                            }, 100);
+                        }
+                        
+                        // Show success modal with iOS Safari compatibility
+                        setTimeout(() => {
+                            showSuccessModal(bookingData);
+                        }, 100);
+                        
+                        // Reset form manually to preserve custom date picker data
+                        setTimeout(() => {
+                            resetBookingForm();
+                            updateBookingSummary();
+                        }, 200);
+                        
+                        console.log('Booking submission completed successfully on iOS Safari');
+                        break;
+                        
+                    } catch (retryError) {
+                        retryCount++;
+                        console.log(`Firebase retry ${retryCount}/${maxRetries}:`, retryError);
+                        if (retryCount >= maxRetries) {
+                            throw retryError;
+                        }
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                    }
+                }
+            } else {
+                // Standard Firebase handling for other browsers
+                const docRef = await addDoc(collection(db, 'bookings'), bookingData);
+                console.log('Booking saved successfully with ID:', docRef.id);
+                
+                // Store booking data for success modal
+                currentBooking = bookingData;
+                
+                // Trigger notification for admin
+                if (window.addBookingNotification) {
+                    console.log('Triggering admin notification...');
+                    window.addBookingNotification(bookingData, docRef.id);
+                }
+                
+                // Show success modal
+                showSuccessModal(bookingData);
+                
+                // Reset form manually to preserve custom date picker data
+                resetBookingForm();
+                updateBookingSummary();
+                
+                console.log('Booking submission completed successfully');
             }
-            
-            // Show success modal
-            showSuccessModal(bookingData);
-            
-            // Reset form manually to preserve custom date picker data
-            resetBookingForm();
-            updateBookingSummary();
-            
-            console.log('Booking submission completed successfully');
             
         } catch (error) {
             console.error('Error saving booking:', error);
@@ -961,10 +1092,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Show success modal
+    // Show success modal - iOS Safari Compatible
     function showSuccessModal(bookingData) {
+        console.log('Showing success modal...');
         const modal = document.getElementById('successModal');
         const bookingDetails = document.getElementById('bookingDetails');
+        
+        if (!modal || !bookingDetails) {
+            console.error('Modal elements not found');
+            return;
+        }
         
         // Populate booking details
         bookingDetails.innerHTML = `
@@ -1003,9 +1140,31 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
         
-        // Show modal
-        modal.style.display = 'block';
+        // iOS Safari specific modal handling
+        if (window.isIOSSafari) {
+            // Force iOS Safari to recognize the modal
+            modal.style.zIndex = '999999';
+            modal.style.position = 'fixed';
+            modal.style.webkitTransform = 'translateZ(0)';
+            modal.style.transform = 'translateZ(0)';
+            modal.style.display = 'block';
+            modal.style.opacity = '0';
+            
+            // Animate in for iOS Safari
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modal.style.transition = 'opacity 0.3s ease';
+            }, 10);
+            
+            // Force repaint
+            modal.offsetHeight;
+        } else {
+            // Standard modal display
+            modal.style.display = 'block';
+        }
+        
         document.body.style.overflow = 'hidden';
+        console.log('Success modal displayed');
     }
 
     // Print booking function

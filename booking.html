@@ -317,45 +317,63 @@
         </div>
     </footer>
 
-    <!-- Firebase SDK -->
+    <!-- Firebase SDK - iOS Safari Compatible -->
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-        import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js';
+        // iOS Safari compatibility check
+        const isIOSSafari = /iPad|iPhone|iPod/.test(navigator.userAgent) && /Safari/.test(navigator.userAgent);
+        console.log('iOS Safari detected:', isIOSSafari);
+        
+        try {
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+            import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+            import { getFirestore, collection, addDoc, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+            import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js';
 
-        // Your Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDdF5kC7-fLx-KbPN-oj7bzef6ZzuR4FkU",
-            authDomain: "arribahomestay-7f961.firebaseapp.com",
-            projectId: "arribahomestay-7f961",
-            storageBucket: "arribahomestay-7f961.firebasestorage.app",
-            messagingSenderId: "614486684423",
-            appId: "1:614486684423:web:5eaed45cbca3b41cf9cba2",
-            measurementId: "G-2GDZFPQ5X5"
-        };
+            // Your Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyDdF5kC7-fLx-KbPN-oj7bzef6ZzuR4FkU",
+                authDomain: "arribahomestay-7f961.firebaseapp.com",
+                projectId: "arribahomestay-7f961",
+                storageBucket: "arribahomestay-7f961.firebasestorage.app",
+                messagingSenderId: "614486684423",
+                appId: "1:614486684423:web:5eaed45cbca3b41cf9cba2",
+                measurementId: "G-2GDZFPQ5X5"
+            };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const messaging = getMessaging(app);
+            // Initialize Firebase with iOS Safari compatibility
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+            const messaging = getMessaging(app);
 
-        // Make Firebase available globally
-        window.auth = auth;
-        window.db = db;
-        window.messaging = messaging;
-        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-        window.signOut = signOut;
-        window.onAuthStateChanged = onAuthStateChanged;
-        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-        window.addDoc = addDoc;
-        window.getDocs = getDocs;
-        window.collection = collection;
-        window.query = query;
-        window.orderBy = orderBy;
-        window.getToken = getToken;
-        window.onMessage = onMessage;
+            // Make Firebase available globally with iOS Safari compatibility
+            window.auth = auth;
+            window.db = db;
+            window.messaging = messaging;
+            window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+            window.signOut = signOut;
+            window.onAuthStateChanged = onAuthStateChanged;
+            window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+            window.addDoc = addDoc;
+            window.getDocs = getDocs;
+            window.collection = collection;
+            window.query = query;
+            window.orderBy = orderBy;
+            window.getToken = getToken;
+            window.onMessage = onMessage;
+            
+            // iOS Safari specific flag
+            window.firebaseInitialized = true;
+            window.isIOSSafari = isIOSSafari;
+            
+            console.log('Firebase initialized successfully');
+            
+        } catch (error) {
+            console.error('Firebase initialization failed:', error);
+            // Fallback for iOS Safari
+            window.firebaseInitialized = false;
+            window.isIOSSafari = isIOSSafari;
+        }
     </script>
 
     <script src="js/main.js"></script>
