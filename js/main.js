@@ -481,7 +481,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle logout when account button is clicked while logged in
     if (accountBtn) {
         console.log('Account button found, adding event listener');
-        accountBtn.addEventListener('click', async function(e) {
+        
+        // Function to handle account button click
+        async function handleAccountClick(e) {
             e.preventDefault();
             e.stopPropagation();
             console.log('Account button clicked');
@@ -512,14 +514,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Modal element:', modal);
                 if (modal) {
                     console.log('Modal found, displaying...');
+                    
+                    // Close mobile menu if it's open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    const navMenu = document.querySelector('.nav-menu');
+                    if (mobileMenu && navMenu && navMenu.classList.contains('active')) {
+                        console.log('Closing mobile menu before showing modal');
+                        mobileMenu.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.style.overflow = 'hidden'; // Keep overflow hidden for modal
+                    }
+                    
                     modal.style.display = 'block';
+                    modal.style.zIndex = '10001'; // Ensure modal is above everything
                     document.body.style.overflow = 'hidden';
                     console.log('Modal display set to:', modal.style.display);
                 } else {
                     console.error('Modal not found!');
                 }
             }
-        });
+        }
+        
+        // Add multiple event listeners for better mobile support
+        accountBtn.addEventListener('click', handleAccountClick);
+        accountBtn.addEventListener('touchend', handleAccountClick);
+        
+        // iPhone-specific touch handling
+        accountBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        }, { passive: false });
     }
 });
 

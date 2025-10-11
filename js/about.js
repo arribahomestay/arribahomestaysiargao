@@ -1,6 +1,33 @@
 // About page specific JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Force remove any carousel elements that might be created dynamically
+    const carouselElements = document.querySelectorAll('.image-carousel, .carousel-container, .carousel-track, .carousel-slide, .mirror-preview, .carousel-btn, .carousel-indicators, .prev-btn, .next-btn, .indicator');
+    carouselElements.forEach(element => {
+        element.remove();
+    });
+    
+    // Ensure only single image container exists
+    const storyImage = document.querySelector('.story-image');
+    if (storyImage) {
+        // Remove any carousel elements from story-image
+        const carouselInStory = storyImage.querySelectorAll('.image-carousel, .carousel-container, .carousel-track, .carousel-slide, .mirror-preview, .carousel-btn, .carousel-indicators, .prev-btn, .next-btn, .indicator');
+        carouselInStory.forEach(element => {
+            element.remove();
+        });
+        
+        // Ensure single-image-container exists and has only one image
+        let singleContainer = storyImage.querySelector('.single-image-container');
+        if (!singleContainer) {
+            singleContainer = document.createElement('div');
+            singleContainer.className = 'single-image-container';
+            storyImage.appendChild(singleContainer);
+        }
+        
+        // Clear any existing content and add only the single image
+        singleContainer.innerHTML = '<img src="images/gallery/9.jpg" alt="Arriba Homestay - Charming Two-Story Villa" class="story-img">';
+    }
+    
     // Add staggered animation to story content
     const storyContent = document.querySelector('.story-content');
     if (storyContent) {

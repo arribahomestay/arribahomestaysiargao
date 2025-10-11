@@ -87,11 +87,44 @@
 .carousel-indicators,
 .prev-btn,
 .next-btn,
-.indicator {
+.indicator,
+.carousel-nav,
+.carousel-controls,
+.carousel-dots,
+.carousel-arrow {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+}
+
+/* Ensure single image container is always visible and properly styled */
+.story-image {
+    position: relative;
+}
+
+.story-image .single-image-container {
+    position: relative !important;
+    width: 100% !important;
+    height: 400px !important;
+    border-radius: 15px !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.story-image .single-image-container .story-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    border-radius: 15px !important;
+    display: block !important;
 }
 
 /* Social Media Section */

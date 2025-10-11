@@ -177,6 +177,8 @@ footer {
     height: 100%;
     background-color: rgba(0,0,0,0.5);
     animation: fadeIn 0.3s ease;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
 }
 
 .modal-content {
@@ -1094,7 +1096,7 @@ footer {
         transition: left 0.3s ease;
         box-shadow: 0 10px 27px rgba(0,0,0,0.1);
         padding: 2rem 0;
-        z-index: 1000;
+        z-index: 9999;
         max-height: calc(100vh - 70px);
         overflow-y: auto;
     }
@@ -1115,7 +1117,7 @@ footer {
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
-        z-index: -1;
+        z-index: 9998;
     }
     
     .nav-menu.active::before {
@@ -1125,7 +1127,7 @@ footer {
 
     .nav-toggle {
         display: flex;
-        z-index: 1001;
+        z-index: 10000;
         position: relative;
     }
 
@@ -1157,6 +1159,35 @@ footer {
     .page-transition-spinner {
         width: 40px;
         height: 40px;
+    }
+    
+    /* Mobile modal adjustments */
+    .modal {
+        z-index: 10001 !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .modal-content {
+        margin: 5% auto;
+        width: 95%;
+        max-width: 350px;
+        border-radius: 10px;
+    }
+    
+    .modal-header {
+        padding: 1rem 1.5rem 0.5rem;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+    
+    /* Ensure account button is clickable on mobile */
+    .account-btn {
+        z-index: 10002 !important;
+        position: relative;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
     }
 }
 
