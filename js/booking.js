@@ -458,6 +458,9 @@ function validateField(event) {
         const extraBed = parseInt(extraBedInput?.value) || 0;
 
         console.log('Summary values:', { checkInDate, checkOutDate, guests, extraBed });
+        console.log('Guests input element:', guestsInput);
+        console.log('Guests input value:', guestsInput?.value);
+        console.log('Parsed guests value:', guests);
 
         // Update summary fields with null checks
         const summaryGuests = document.getElementById('summaryGuests');
@@ -691,7 +694,9 @@ function resetSummaryDisplay() {
                     }
                     
                     // Show success modal with mobile compatibility
+                    console.log('📱 Mobile: About to show success modal in 200ms...');
                     setTimeout(() => {
+                        console.log('📱 Mobile: Calling showSuccessModal now!');
                         showSuccessModal(bookingData);
                     }, 200);
                     
@@ -728,6 +733,7 @@ function resetSummaryDisplay() {
             }
             
             // Show success modal
+            console.log('🖥️ Desktop: About to show success modal...');
             showSuccessModal(bookingData);
             
             // Reset form manually to preserve custom date picker data
@@ -779,12 +785,15 @@ function resetSummaryDisplay() {
 
 // Show success modal - iOS Safari Compatible
     function showSuccessModal(bookingData) {
-    console.log('Showing success modal...');
+    console.log('🎉 SHOWING SUCCESS MODAL - bookingData:', bookingData);
         const modal = document.getElementById('successModal');
         const bookingDetails = document.getElementById('bookingDetails');
     
+    console.log('Modal element:', modal);
+    console.log('Booking details element:', bookingDetails);
+    
     if (!modal || !bookingDetails) {
-        console.error('Modal elements not found');
+        console.error('❌ Modal elements not found - modal:', modal, 'bookingDetails:', bookingDetails);
         return;
     }
         
